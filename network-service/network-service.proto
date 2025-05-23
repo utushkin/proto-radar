@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package networkService;
+
+option go_package = "gl.npo-its.ru/radar/proto-radar";
+
+service NetworkService {
+  // Управление сетью
+  rpc ChangeNetworkConfig(NetworkConfig) returns (NetworkConfigResponse);
+  rpc GetCurrentNetworkConfig(Empty) returns (CurrentNetworkConfigResponse);
+
+  // Управление временем
+  rpc SetTimeSyncMode(TimeSyncRequest) returns (Response);
+  rpc GetCurrentTime(Empty) returns (TimeResponse);
+}
+
+message Empty {}
+
+message CurrentNetworkConfigResponse {
+  int32 mode = 1;
+  string ip_address = 2;
+  string subnet_mask = 3;
+  string gateway = 4;
+}
+
+message NetworkConfig {
+  int32 mode = 1;
+  string ip_address = 2;  // Новый IP-адрес
+  string subnet_mask = 3; // Маска подсети
+  string gateway = 4;     // Шлюз
+}
+
+message NetworkConfigResponse {
+  int32 set_mode = 1;
+  string set_ip_address = 2;  // Новый IP-адрес
+  string set_subnet_mask = 3; // Маска подсети
+  string set_gateway = 4;     // Шлюз
+}
+
+message Response {
+  bool success = 1;
+  string message = 2;
+}
+
+message TimeSyncRequest {
+  int32 sync_mode= 1;
+  string ntp_server = 2;
+  string timezone = 3; // Например "Саратов (UTC+04:00)"
+  string datetime = 4; // Формат "2025-04-01 11:35:00"
+}
+
+message TimeResponse {
+  string current_time = 1;    // Формат "2025-04-01 11:35:00"
+  string timezone = 2;       // Например "UTC+04:00"
+  string time_sync_mode = 3;  // "ntp" или "manual"
+  string ntp_server = 4;      // Текущий NTP сервер (если используется)
+}

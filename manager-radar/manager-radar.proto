@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package radar;
+
+option go_package = "gl.npo-its.ru/radar/proto-radar";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// Структура радара
+message Radar {
+  string  id = 1; // Идентификатор радара
+  string name = 2; // Название радара
+  double lat = 3;
+  double lon = 4;
+  float azimuth = 5; // Азимут
+  optional string direction = 6; // Направление
+  string address = 7; // Адрес
+  string ip = 8; // IP-адрес
+  string serial = 9; // Серийный номер
+  string model = 10; // Модель радара
+}
+
+// Ответ сервиса
+message RadarResponse {
+  Radar radar = 1; // Ответ с радаром (при создании или обновлении)
+}
+// Ответ сервиса
+message RadarsResponse {
+  repeated Radar radars = 1; // Ответ с массивом радаров (при получении всех)
+}
+
+// Запрос на создание радара
+message CreateRadarRequest {
+  Radar radar = 1; // Радар для создания
+}
+
+// Запрос на обновление радара
+message UpdateRadarRequest {
+  string id = 1; // Идентификатор радара
+  Radar radar = 2; // Обновленные данные радара
+}
+
+message GetTransportObjectInfoRequest {
+  int64 page = 1; // номер страницы
+  int64 pageSize = 2; // кол-во объектов на странице
+}
+
+message TransportObjectInfo {
+  string id = 1;
+  string sensor_id = 2;
+  string origin_id = 3;
+  bytes coordinates = 4; // JSON-encoded координаты
+  string color = 5;
+  double speed = 6;
+  double heading = 7;
+  double length = 8;
+  int64 date = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+message GetTransportObjectInfoResponse {
+  repeated TransportObjectInfo data = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+  int64 total_items = 4;
+}
+
+// Запрос на получение информации о радаре по ID
+message GetRadarRequest {
+  string id = 1; // Идентификатор радара
+}
+
+// Запрос на удаление радара по ID
+message DeleteRadarRequest {
+  string id = 1; // Идентификатор радара
+}
+
+// Ответ с временными зонами
+message TimeZonesResponse {
+  repeated string time_zones = 1; // Список временных зон
+}
+
+// Ответ с моделями радара
+message RadarModelsResponse {
+  repeated RadarModel models = 1; // Список моделей радара
+}
+
+// Структура модели радара
+message RadarModel {
+  string id = 1;       // Идентификатор модели
+  string alias = 2;    // Алиас модели
+  string model_name = 3; // Название модели
+  string manufacturer = 4; // Производитель модели
+}
+
+message Device {
+  string id = 1; // Идентификатор Пуида
+  string name = 2; // Название Пуида
+  string address = 3; // Адрес
+  double lat = 4;  // Широта
+  double lon = 5; // Долгота
+  string serial = 6; // Серийный номер
+  google.protobuf.Timestamp production_date = 7; // Дата производства
+  optional string note = 8; // Примечание
+}
+
+message DeviceResponse {
+  Device device = 1;
+}
+
+message UpdateDeviceRequest {
+  Device device = 1;
+}
+
+
+// Определение сервиса радара
+service RadarService {
+  rpc CreateRadar(CreateRadarRequest) returns (RadarResponse);
+  rpc UpdateRadar(UpdateRadarRequest) returns (RadarResponse);
+  rpc GetRadar(GetRadarRequest) returns (RadarResponse);
+  rpc GetAllRadars(google.protobuf.Empty) returns (RadarsResponse);
+  rpc DeleteRadar(DeleteRadarRequest) returns (RadarResponse);
+
+  rpc GetTimeZones(google.protobuf.Empty) returns (TimeZonesResponse);
+  rpc GetRadarModels(google.protobuf.Empty) returns (RadarModelsResponse);
+
+  rpc GetDevice(google.protobuf.Empty) returns (DeviceResponse);
+  rpc UpdateDevice(UpdateDeviceRequest) returns (DeviceResponse);
+
+  rpc GetTransportObjectInfo(GetTransportObjectInfoRequest) returns (GetTransportObjectInfoResponse);
+}
