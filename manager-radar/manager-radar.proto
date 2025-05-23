@@ -7,6 +7,7 @@ option go_package = "gl.npo-its.ru/radar/proto-radar";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
+
 // Структура радара
 message Radar {
   string  id = 1; // Идентификатор радара
@@ -41,9 +42,24 @@ message UpdateRadarRequest {
   Radar radar = 2; // Обновленные данные радара
 }
 
+message RecognitionsFilter {
+  repeated string sensor_ids = 1;
+  double heading_from = 2;
+  double heading_to = 3;
+  double length_from = 4;
+  double length_to = 5;
+  double speed_from = 6;
+  double speed_to = 7;
+  int64  date_from = 8;
+  int64  date_to = 9;
+  string sorting = 10;        // "asc" or "desc"
+  string sorting_column = 11;
+}
+
 message GetTransportObjectInfoRequest {
   int64 page = 1; // номер страницы
   int64 pageSize = 2; // кол-во объектов на странице
+  RecognitionsFilter filter = 3;
 }
 
 message TransportObjectInfo {
@@ -78,7 +94,13 @@ message DeleteRadarRequest {
 
 // Ответ с временными зонами
 message TimeZonesResponse {
-  repeated string time_zones = 1; // Список временных зон
+  repeated TimeZone time_zones = 1; // Список временных зон
+}
+
+message TimeZone {
+  string id = 1;
+  string full_name = 2;
+  string time_zone = 3;
 }
 
 // Ответ с моделями радара
