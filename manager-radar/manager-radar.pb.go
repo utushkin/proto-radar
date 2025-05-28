@@ -1196,7 +1196,7 @@ func (x *UpdateDeviceRequest) GetDevice() *Device {
 type ExportTypeParam struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Field         string                 `protobuf:"bytes,1,opt,name=field,proto3" json:"field,omitempty"`
-	Required      int32                  `protobuf:"varint,2,opt,name=required,proto3" json:"required,omitempty"`
+	Required      bool                   `protobuf:"varint,2,opt,name=required,proto3" json:"required,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1238,11 +1238,11 @@ func (x *ExportTypeParam) GetField() string {
 	return ""
 }
 
-func (x *ExportTypeParam) GetRequired() int32 {
+func (x *ExportTypeParam) GetRequired() bool {
 	if x != nil {
 		return x.Required
 	}
-	return 0
+	return false
 }
 
 type ExportType struct {
@@ -2004,7 +2004,7 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\x06device\x18\x01 \x01(\v2\r.radar.DeviceR\x06device\"C\n" +
 	"\x0fExportTypeParam\x12\x14\n" +
 	"\x05field\x18\x01 \x01(\tR\x05field\x12\x1a\n" +
-	"\brequired\x18\x02 \x01(\x05R\brequired\"q\n" +
+	"\brequired\x18\x02 \x01(\bR\brequired\"q\n" +
 	"\n" +
 	"ExportType\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +

@@ -137,7 +137,7 @@ message UpdateDeviceRequest {
 
 message ExportTypeParam {
   string field = 1;
-  int32 required = 2;
+  bool required = 2;
 }
 
 message ExportType {
