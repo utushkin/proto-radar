@@ -1193,7 +1193,7 @@ func (x *UpdateDeviceRequest) GetDevice() *Device {
 	return nil
 }
 
-type ExportTypesParams struct {
+type ExportTypeParam struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Field         string                 `protobuf:"bytes,1,opt,name=field,proto3" json:"field,omitempty"`
 	Required      int32                  `protobuf:"varint,2,opt,name=required,proto3" json:"required,omitempty"`
@@ -1201,20 +1201,20 @@ type ExportTypesParams struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ExportTypesParams) Reset() {
-	*x = ExportTypesParams{}
+func (x *ExportTypeParam) Reset() {
+	*x = ExportTypeParam{}
 	mi := &file_manager_radar_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExportTypesParams) String() string {
+func (x *ExportTypeParam) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExportTypesParams) ProtoMessage() {}
+func (*ExportTypeParam) ProtoMessage() {}
 
-func (x *ExportTypesParams) ProtoReflect() protoreflect.Message {
+func (x *ExportTypeParam) ProtoReflect() protoreflect.Message {
 	mi := &file_manager_radar_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1226,37 +1226,95 @@ func (x *ExportTypesParams) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExportTypesParams.ProtoReflect.Descriptor instead.
-func (*ExportTypesParams) Descriptor() ([]byte, []int) {
+// Deprecated: Use ExportTypeParam.ProtoReflect.Descriptor instead.
+func (*ExportTypeParam) Descriptor() ([]byte, []int) {
 	return file_manager_radar_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *ExportTypesParams) GetField() string {
+func (x *ExportTypeParam) GetField() string {
 	if x != nil {
 		return x.Field
 	}
 	return ""
 }
 
-func (x *ExportTypesParams) GetRequired() int32 {
+func (x *ExportTypeParam) GetRequired() int32 {
 	if x != nil {
 		return x.Required
 	}
 	return 0
 }
 
-type GetExportTypesResponse struct {
+type ExportType struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	FullName      string                 `protobuf:"bytes,2,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
-	Parameters    []*ExportTypesParams   `protobuf:"bytes,3,rep,name=parameters,proto3" json:"parameters,omitempty"`
+	Parameters    []*ExportTypeParam     `protobuf:"bytes,3,rep,name=parameters,proto3" json:"parameters,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportType) Reset() {
+	*x = ExportType{}
+	mi := &file_manager_radar_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportType) ProtoMessage() {}
+
+func (x *ExportType) ProtoReflect() protoreflect.Message {
+	mi := &file_manager_radar_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportType.ProtoReflect.Descriptor instead.
+func (*ExportType) Descriptor() ([]byte, []int) {
+	return file_manager_radar_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ExportType) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ExportType) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+func (x *ExportType) GetParameters() []*ExportTypeParam {
+	if x != nil {
+		return x.Parameters
+	}
+	return nil
+}
+
+type GetExportTypesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Types         []*ExportType          `protobuf:"bytes,1,rep,name=types,proto3" json:"types,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetExportTypesResponse) Reset() {
 	*x = GetExportTypesResponse{}
-	mi := &file_manager_radar_proto_msgTypes[19]
+	mi := &file_manager_radar_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1268,7 +1326,7 @@ func (x *GetExportTypesResponse) String() string {
 func (*GetExportTypesResponse) ProtoMessage() {}
 
 func (x *GetExportTypesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[19]
+	mi := &file_manager_radar_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1281,31 +1339,17 @@ func (x *GetExportTypesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetExportTypesResponse.ProtoReflect.Descriptor instead.
 func (*GetExportTypesResponse) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{19}
+	return file_manager_radar_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *GetExportTypesResponse) GetId() string {
+func (x *GetExportTypesResponse) GetTypes() []*ExportType {
 	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetExportTypesResponse) GetFullName() string {
-	if x != nil {
-		return x.FullName
-	}
-	return ""
-}
-
-func (x *GetExportTypesResponse) GetParameters() []*ExportTypesParams {
-	if x != nil {
-		return x.Parameters
+		return x.Types
 	}
 	return nil
 }
 
-type GetExportStatusesResponse struct {
+type ExportStatus struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	FullName      string                 `protobuf:"bytes,2,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
@@ -1313,9 +1357,60 @@ type GetExportStatusesResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *ExportStatus) Reset() {
+	*x = ExportStatus{}
+	mi := &file_manager_radar_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportStatus) ProtoMessage() {}
+
+func (x *ExportStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_manager_radar_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportStatus.ProtoReflect.Descriptor instead.
+func (*ExportStatus) Descriptor() ([]byte, []int) {
+	return file_manager_radar_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ExportStatus) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ExportStatus) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+type GetExportStatusesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Statuses      []*ExportStatus        `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
 func (x *GetExportStatusesResponse) Reset() {
 	*x = GetExportStatusesResponse{}
-	mi := &file_manager_radar_proto_msgTypes[20]
+	mi := &file_manager_radar_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1327,7 +1422,7 @@ func (x *GetExportStatusesResponse) String() string {
 func (*GetExportStatusesResponse) ProtoMessage() {}
 
 func (x *GetExportStatusesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[20]
+	mi := &file_manager_radar_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1340,21 +1435,14 @@ func (x *GetExportStatusesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetExportStatusesResponse.ProtoReflect.Descriptor instead.
 func (*GetExportStatusesResponse) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{20}
+	return file_manager_radar_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *GetExportStatusesResponse) GetId() string {
+func (x *GetExportStatusesResponse) GetStatuses() []*ExportStatus {
 	if x != nil {
-		return x.Id
+		return x.Statuses
 	}
-	return ""
-}
-
-func (x *GetExportStatusesResponse) GetFullName() string {
-	if x != nil {
-		return x.FullName
-	}
-	return ""
+	return nil
 }
 
 // Структура экспорта
@@ -1374,7 +1462,7 @@ type Export struct {
 
 func (x *Export) Reset() {
 	*x = Export{}
-	mi := &file_manager_radar_proto_msgTypes[21]
+	mi := &file_manager_radar_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1386,7 +1474,7 @@ func (x *Export) String() string {
 func (*Export) ProtoMessage() {}
 
 func (x *Export) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[21]
+	mi := &file_manager_radar_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1399,7 +1487,7 @@ func (x *Export) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Export.ProtoReflect.Descriptor instead.
 func (*Export) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{21}
+	return file_manager_radar_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Export) GetId() string {
@@ -1465,14 +1553,14 @@ type ListExport struct {
 	ExportType    string                 `protobuf:"bytes,3,opt,name=export_type,json=exportType,proto3" json:"export_type,omitempty"`
 	Host          string                 `protobuf:"bytes,4,opt,name=host,proto3" json:"host,omitempty"`
 	Port          int32                  `protobuf:"varint,5,opt,name=port,proto3" json:"port,omitempty"`
-	State         bool                   `protobuf:"varint,6,opt,name=state,proto3" json:"state,omitempty"`
+	ExportOn      bool                   `protobuf:"varint,6,opt,name=export_on,json=exportOn,proto3" json:"export_on,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListExport) Reset() {
 	*x = ListExport{}
-	mi := &file_manager_radar_proto_msgTypes[22]
+	mi := &file_manager_radar_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1484,7 +1572,7 @@ func (x *ListExport) String() string {
 func (*ListExport) ProtoMessage() {}
 
 func (x *ListExport) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[22]
+	mi := &file_manager_radar_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1497,7 +1585,7 @@ func (x *ListExport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExport.ProtoReflect.Descriptor instead.
 func (*ListExport) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{22}
+	return file_manager_radar_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ListExport) GetId() string {
@@ -1535,9 +1623,9 @@ func (x *ListExport) GetPort() int32 {
 	return 0
 }
 
-func (x *ListExport) GetState() bool {
+func (x *ListExport) GetExportOn() bool {
 	if x != nil {
-		return x.State
+		return x.ExportOn
 	}
 	return false
 }
@@ -1552,7 +1640,7 @@ type ExportResponse struct {
 
 func (x *ExportResponse) Reset() {
 	*x = ExportResponse{}
-	mi := &file_manager_radar_proto_msgTypes[23]
+	mi := &file_manager_radar_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1564,7 +1652,7 @@ func (x *ExportResponse) String() string {
 func (*ExportResponse) ProtoMessage() {}
 
 func (x *ExportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[23]
+	mi := &file_manager_radar_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1577,7 +1665,7 @@ func (x *ExportResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportResponse.ProtoReflect.Descriptor instead.
 func (*ExportResponse) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{23}
+	return file_manager_radar_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ExportResponse) GetExport() *Export {
@@ -1597,7 +1685,7 @@ type ExportsResponse struct {
 
 func (x *ExportsResponse) Reset() {
 	*x = ExportsResponse{}
-	mi := &file_manager_radar_proto_msgTypes[24]
+	mi := &file_manager_radar_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1609,7 +1697,7 @@ func (x *ExportsResponse) String() string {
 func (*ExportsResponse) ProtoMessage() {}
 
 func (x *ExportsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[24]
+	mi := &file_manager_radar_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1622,7 +1710,7 @@ func (x *ExportsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportsResponse.ProtoReflect.Descriptor instead.
 func (*ExportsResponse) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{24}
+	return file_manager_radar_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ExportsResponse) GetExports() []*ListExport {
@@ -1642,7 +1730,7 @@ type CreateExportRequest struct {
 
 func (x *CreateExportRequest) Reset() {
 	*x = CreateExportRequest{}
-	mi := &file_manager_radar_proto_msgTypes[25]
+	mi := &file_manager_radar_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1654,7 +1742,7 @@ func (x *CreateExportRequest) String() string {
 func (*CreateExportRequest) ProtoMessage() {}
 
 func (x *CreateExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[25]
+	mi := &file_manager_radar_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1667,7 +1755,7 @@ func (x *CreateExportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateExportRequest.ProtoReflect.Descriptor instead.
 func (*CreateExportRequest) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{25}
+	return file_manager_radar_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *CreateExportRequest) GetExport() *Export {
@@ -1687,7 +1775,7 @@ type UpdateExportRequest struct {
 
 func (x *UpdateExportRequest) Reset() {
 	*x = UpdateExportRequest{}
-	mi := &file_manager_radar_proto_msgTypes[26]
+	mi := &file_manager_radar_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1699,7 +1787,7 @@ func (x *UpdateExportRequest) String() string {
 func (*UpdateExportRequest) ProtoMessage() {}
 
 func (x *UpdateExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[26]
+	mi := &file_manager_radar_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1712,7 +1800,7 @@ func (x *UpdateExportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateExportRequest.ProtoReflect.Descriptor instead.
 func (*UpdateExportRequest) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{26}
+	return file_manager_radar_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *UpdateExportRequest) GetExport() *Export {
@@ -1732,7 +1820,7 @@ type GetExportRequest struct {
 
 func (x *GetExportRequest) Reset() {
 	*x = GetExportRequest{}
-	mi := &file_manager_radar_proto_msgTypes[27]
+	mi := &file_manager_radar_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1744,7 +1832,7 @@ func (x *GetExportRequest) String() string {
 func (*GetExportRequest) ProtoMessage() {}
 
 func (x *GetExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[27]
+	mi := &file_manager_radar_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1757,7 +1845,7 @@ func (x *GetExportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetExportRequest.ProtoReflect.Descriptor instead.
 func (*GetExportRequest) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{27}
+	return file_manager_radar_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetExportRequest) GetId() string {
@@ -1777,7 +1865,7 @@ type DeleteExportRequest struct {
 
 func (x *DeleteExportRequest) Reset() {
 	*x = DeleteExportRequest{}
-	mi := &file_manager_radar_proto_msgTypes[28]
+	mi := &file_manager_radar_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1789,7 +1877,7 @@ func (x *DeleteExportRequest) String() string {
 func (*DeleteExportRequest) ProtoMessage() {}
 
 func (x *DeleteExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[28]
+	mi := &file_manager_radar_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1802,7 +1890,7 @@ func (x *DeleteExportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteExportRequest.ProtoReflect.Descriptor instead.
 func (*DeleteExportRequest) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{28}
+	return file_manager_radar_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *DeleteExportRequest) GetId() string {
@@ -1913,19 +2001,24 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\x0eDeviceResponse\x12%\n" +
 	"\x06device\x18\x01 \x01(\v2\r.radar.DeviceR\x06device\"<\n" +
 	"\x13UpdateDeviceRequest\x12%\n" +
-	"\x06device\x18\x01 \x01(\v2\r.radar.DeviceR\x06device\"E\n" +
-	"\x11ExportTypesParams\x12\x14\n" +
+	"\x06device\x18\x01 \x01(\v2\r.radar.DeviceR\x06device\"C\n" +
+	"\x0fExportTypeParam\x12\x14\n" +
 	"\x05field\x18\x01 \x01(\tR\x05field\x12\x1a\n" +
-	"\brequired\x18\x02 \x01(\x05R\brequired\"\x7f\n" +
-	"\x16GetExportTypesResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
-	"\tfull_name\x18\x02 \x01(\tR\bfullName\x128\n" +
+	"\brequired\x18\x02 \x01(\x05R\brequired\"q\n" +
 	"\n" +
-	"parameters\x18\x03 \x03(\v2\x18.radar.ExportTypesParamsR\n" +
-	"parameters\"H\n" +
-	"\x19GetExportStatusesResponse\x12\x0e\n" +
+	"ExportType\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
-	"\tfull_name\x18\x02 \x01(\tR\bfullName\"\x80\x02\n" +
+	"\tfull_name\x18\x02 \x01(\tR\bfullName\x126\n" +
+	"\n" +
+	"parameters\x18\x03 \x03(\v2\x16.radar.ExportTypeParamR\n" +
+	"parameters\"A\n" +
+	"\x16GetExportTypesResponse\x12'\n" +
+	"\x05types\x18\x01 \x03(\v2\x11.radar.ExportTypeR\x05types\";\n" +
+	"\fExportStatus\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
+	"\tfull_name\x18\x02 \x01(\tR\bfullName\"L\n" +
+	"\x19GetExportStatusesResponse\x12/\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x13.radar.ExportStatusR\bstatuses\"\x80\x02\n" +
 	"\x06Export\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1f\n" +
@@ -1939,7 +2032,7 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\x05_hostB\a\n" +
 	"\x05_portB\b\n" +
 	"\x06_loginB\v\n" +
-	"\t_password\"\x8f\x01\n" +
+	"\t_password\"\x96\x01\n" +
 	"\n" +
 	"ListExport\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
@@ -1947,8 +2040,8 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\vexport_type\x18\x03 \x01(\tR\n" +
 	"exportType\x12\x12\n" +
 	"\x04host\x18\x04 \x01(\tR\x04host\x12\x12\n" +
-	"\x04port\x18\x05 \x01(\x05R\x04port\x12\x14\n" +
-	"\x05state\x18\x06 \x01(\bR\x05state\"7\n" +
+	"\x04port\x18\x05 \x01(\x05R\x04port\x12\x1b\n" +
+	"\texport_on\x18\x06 \x01(\bR\bexportOn\"7\n" +
 	"\x0eExportResponse\x12%\n" +
 	"\x06export\x18\x01 \x01(\v2\r.radar.ExportR\x06export\">\n" +
 	"\x0fExportsResponse\x12+\n" +
@@ -1992,7 +2085,7 @@ func file_manager_radar_proto_rawDescGZIP() []byte {
 	return file_manager_radar_proto_rawDescData
 }
 
-var file_manager_radar_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
+var file_manager_radar_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_manager_radar_proto_goTypes = []any{
 	(*Radar)(nil),                          // 0: radar.Radar
 	(*RadarResponse)(nil),                  // 1: radar.RadarResponse
@@ -2012,19 +2105,21 @@ var file_manager_radar_proto_goTypes = []any{
 	(*Device)(nil),                         // 15: radar.Device
 	(*DeviceResponse)(nil),                 // 16: radar.DeviceResponse
 	(*UpdateDeviceRequest)(nil),            // 17: radar.UpdateDeviceRequest
-	(*ExportTypesParams)(nil),              // 18: radar.ExportTypesParams
-	(*GetExportTypesResponse)(nil),         // 19: radar.GetExportTypesResponse
-	(*GetExportStatusesResponse)(nil),      // 20: radar.GetExportStatusesResponse
-	(*Export)(nil),                         // 21: radar.Export
-	(*ListExport)(nil),                     // 22: radar.ListExport
-	(*ExportResponse)(nil),                 // 23: radar.ExportResponse
-	(*ExportsResponse)(nil),                // 24: radar.ExportsResponse
-	(*CreateExportRequest)(nil),            // 25: radar.CreateExportRequest
-	(*UpdateExportRequest)(nil),            // 26: radar.UpdateExportRequest
-	(*GetExportRequest)(nil),               // 27: radar.GetExportRequest
-	(*DeleteExportRequest)(nil),            // 28: radar.DeleteExportRequest
-	(*timestamppb.Timestamp)(nil),          // 29: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                  // 30: google.protobuf.Empty
+	(*ExportTypeParam)(nil),                // 18: radar.ExportTypeParam
+	(*ExportType)(nil),                     // 19: radar.ExportType
+	(*GetExportTypesResponse)(nil),         // 20: radar.GetExportTypesResponse
+	(*ExportStatus)(nil),                   // 21: radar.ExportStatus
+	(*GetExportStatusesResponse)(nil),      // 22: radar.GetExportStatusesResponse
+	(*Export)(nil),                         // 23: radar.Export
+	(*ListExport)(nil),                     // 24: radar.ListExport
+	(*ExportResponse)(nil),                 // 25: radar.ExportResponse
+	(*ExportsResponse)(nil),                // 26: radar.ExportsResponse
+	(*CreateExportRequest)(nil),            // 27: radar.CreateExportRequest
+	(*UpdateExportRequest)(nil),            // 28: radar.UpdateExportRequest
+	(*GetExportRequest)(nil),               // 29: radar.GetExportRequest
+	(*DeleteExportRequest)(nil),            // 30: radar.DeleteExportRequest
+	(*timestamppb.Timestamp)(nil),          // 31: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                  // 32: google.protobuf.Empty
 }
 var file_manager_radar_proto_depIdxs = []int32{
 	0,  // 0: radar.RadarResponse.radar:type_name -> radar.Radar
@@ -2032,57 +2127,59 @@ var file_manager_radar_proto_depIdxs = []int32{
 	0,  // 2: radar.CreateRadarRequest.radar:type_name -> radar.Radar
 	0,  // 3: radar.UpdateRadarRequest.radar:type_name -> radar.Radar
 	5,  // 4: radar.GetTransportObjectInfoRequest.filter:type_name -> radar.RecognitionsFilter
-	29, // 5: radar.TransportObjectInfo.created_at:type_name -> google.protobuf.Timestamp
+	31, // 5: radar.TransportObjectInfo.created_at:type_name -> google.protobuf.Timestamp
 	7,  // 6: radar.GetTransportObjectInfoResponse.data:type_name -> radar.TransportObjectInfo
 	12, // 7: radar.TimeZonesResponse.time_zones:type_name -> radar.TimeZone
 	14, // 8: radar.RadarModelsResponse.models:type_name -> radar.RadarModel
-	29, // 9: radar.Device.production_date:type_name -> google.protobuf.Timestamp
+	31, // 9: radar.Device.production_date:type_name -> google.protobuf.Timestamp
 	15, // 10: radar.DeviceResponse.device:type_name -> radar.Device
 	15, // 11: radar.UpdateDeviceRequest.device:type_name -> radar.Device
-	18, // 12: radar.GetExportTypesResponse.parameters:type_name -> radar.ExportTypesParams
-	21, // 13: radar.ExportResponse.export:type_name -> radar.Export
-	22, // 14: radar.ExportsResponse.exports:type_name -> radar.ListExport
-	21, // 15: radar.CreateExportRequest.export:type_name -> radar.Export
-	21, // 16: radar.UpdateExportRequest.export:type_name -> radar.Export
-	3,  // 17: radar.RadarService.CreateRadar:input_type -> radar.CreateRadarRequest
-	4,  // 18: radar.RadarService.UpdateRadar:input_type -> radar.UpdateRadarRequest
-	9,  // 19: radar.RadarService.GetRadar:input_type -> radar.GetRadarRequest
-	30, // 20: radar.RadarService.GetAllRadars:input_type -> google.protobuf.Empty
-	10, // 21: radar.RadarService.DeleteRadar:input_type -> radar.DeleteRadarRequest
-	30, // 22: radar.RadarService.GetTimeZones:input_type -> google.protobuf.Empty
-	30, // 23: radar.RadarService.GetRadarModels:input_type -> google.protobuf.Empty
-	30, // 24: radar.RadarService.GetDevice:input_type -> google.protobuf.Empty
-	17, // 25: radar.RadarService.UpdateDevice:input_type -> radar.UpdateDeviceRequest
-	6,  // 26: radar.RadarService.GetTransportObjectInfo:input_type -> radar.GetTransportObjectInfoRequest
-	30, // 27: radar.RadarService.GetExportsTypes:input_type -> google.protobuf.Empty
-	30, // 28: radar.RadarService.GetExportStatuses:input_type -> google.protobuf.Empty
-	25, // 29: radar.RadarService.CreateExport:input_type -> radar.CreateExportRequest
-	26, // 30: radar.RadarService.UpdateExport:input_type -> radar.UpdateExportRequest
-	27, // 31: radar.RadarService.GetExport:input_type -> radar.GetExportRequest
-	30, // 32: radar.RadarService.GetAllExports:input_type -> google.protobuf.Empty
-	28, // 33: radar.RadarService.DeleteExport:input_type -> radar.DeleteExportRequest
-	1,  // 34: radar.RadarService.CreateRadar:output_type -> radar.RadarResponse
-	1,  // 35: radar.RadarService.UpdateRadar:output_type -> radar.RadarResponse
-	1,  // 36: radar.RadarService.GetRadar:output_type -> radar.RadarResponse
-	2,  // 37: radar.RadarService.GetAllRadars:output_type -> radar.RadarsResponse
-	1,  // 38: radar.RadarService.DeleteRadar:output_type -> radar.RadarResponse
-	11, // 39: radar.RadarService.GetTimeZones:output_type -> radar.TimeZonesResponse
-	13, // 40: radar.RadarService.GetRadarModels:output_type -> radar.RadarModelsResponse
-	16, // 41: radar.RadarService.GetDevice:output_type -> radar.DeviceResponse
-	16, // 42: radar.RadarService.UpdateDevice:output_type -> radar.DeviceResponse
-	8,  // 43: radar.RadarService.GetTransportObjectInfo:output_type -> radar.GetTransportObjectInfoResponse
-	19, // 44: radar.RadarService.GetExportsTypes:output_type -> radar.GetExportTypesResponse
-	20, // 45: radar.RadarService.GetExportStatuses:output_type -> radar.GetExportStatusesResponse
-	23, // 46: radar.RadarService.CreateExport:output_type -> radar.ExportResponse
-	23, // 47: radar.RadarService.UpdateExport:output_type -> radar.ExportResponse
-	23, // 48: radar.RadarService.GetExport:output_type -> radar.ExportResponse
-	24, // 49: radar.RadarService.GetAllExports:output_type -> radar.ExportsResponse
-	23, // 50: radar.RadarService.DeleteExport:output_type -> radar.ExportResponse
-	34, // [34:51] is the sub-list for method output_type
-	17, // [17:34] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	18, // 12: radar.ExportType.parameters:type_name -> radar.ExportTypeParam
+	19, // 13: radar.GetExportTypesResponse.types:type_name -> radar.ExportType
+	21, // 14: radar.GetExportStatusesResponse.statuses:type_name -> radar.ExportStatus
+	23, // 15: radar.ExportResponse.export:type_name -> radar.Export
+	24, // 16: radar.ExportsResponse.exports:type_name -> radar.ListExport
+	23, // 17: radar.CreateExportRequest.export:type_name -> radar.Export
+	23, // 18: radar.UpdateExportRequest.export:type_name -> radar.Export
+	3,  // 19: radar.RadarService.CreateRadar:input_type -> radar.CreateRadarRequest
+	4,  // 20: radar.RadarService.UpdateRadar:input_type -> radar.UpdateRadarRequest
+	9,  // 21: radar.RadarService.GetRadar:input_type -> radar.GetRadarRequest
+	32, // 22: radar.RadarService.GetAllRadars:input_type -> google.protobuf.Empty
+	10, // 23: radar.RadarService.DeleteRadar:input_type -> radar.DeleteRadarRequest
+	32, // 24: radar.RadarService.GetTimeZones:input_type -> google.protobuf.Empty
+	32, // 25: radar.RadarService.GetRadarModels:input_type -> google.protobuf.Empty
+	32, // 26: radar.RadarService.GetDevice:input_type -> google.protobuf.Empty
+	17, // 27: radar.RadarService.UpdateDevice:input_type -> radar.UpdateDeviceRequest
+	6,  // 28: radar.RadarService.GetTransportObjectInfo:input_type -> radar.GetTransportObjectInfoRequest
+	32, // 29: radar.RadarService.GetExportsTypes:input_type -> google.protobuf.Empty
+	32, // 30: radar.RadarService.GetExportStatuses:input_type -> google.protobuf.Empty
+	27, // 31: radar.RadarService.CreateExport:input_type -> radar.CreateExportRequest
+	28, // 32: radar.RadarService.UpdateExport:input_type -> radar.UpdateExportRequest
+	29, // 33: radar.RadarService.GetExport:input_type -> radar.GetExportRequest
+	32, // 34: radar.RadarService.GetAllExports:input_type -> google.protobuf.Empty
+	30, // 35: radar.RadarService.DeleteExport:input_type -> radar.DeleteExportRequest
+	1,  // 36: radar.RadarService.CreateRadar:output_type -> radar.RadarResponse
+	1,  // 37: radar.RadarService.UpdateRadar:output_type -> radar.RadarResponse
+	1,  // 38: radar.RadarService.GetRadar:output_type -> radar.RadarResponse
+	2,  // 39: radar.RadarService.GetAllRadars:output_type -> radar.RadarsResponse
+	1,  // 40: radar.RadarService.DeleteRadar:output_type -> radar.RadarResponse
+	11, // 41: radar.RadarService.GetTimeZones:output_type -> radar.TimeZonesResponse
+	13, // 42: radar.RadarService.GetRadarModels:output_type -> radar.RadarModelsResponse
+	16, // 43: radar.RadarService.GetDevice:output_type -> radar.DeviceResponse
+	16, // 44: radar.RadarService.UpdateDevice:output_type -> radar.DeviceResponse
+	8,  // 45: radar.RadarService.GetTransportObjectInfo:output_type -> radar.GetTransportObjectInfoResponse
+	20, // 46: radar.RadarService.GetExportsTypes:output_type -> radar.GetExportTypesResponse
+	22, // 47: radar.RadarService.GetExportStatuses:output_type -> radar.GetExportStatusesResponse
+	25, // 48: radar.RadarService.CreateExport:output_type -> radar.ExportResponse
+	25, // 49: radar.RadarService.UpdateExport:output_type -> radar.ExportResponse
+	25, // 50: radar.RadarService.GetExport:output_type -> radar.ExportResponse
+	26, // 51: radar.RadarService.GetAllExports:output_type -> radar.ExportsResponse
+	25, // 52: radar.RadarService.DeleteExport:output_type -> radar.ExportResponse
+	36, // [36:53] is the sub-list for method output_type
+	19, // [19:36] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_manager_radar_proto_init() }
@@ -2092,14 +2189,14 @@ func file_manager_radar_proto_init() {
 	}
 	file_manager_radar_proto_msgTypes[0].OneofWrappers = []any{}
 	file_manager_radar_proto_msgTypes[15].OneofWrappers = []any{}
-	file_manager_radar_proto_msgTypes[21].OneofWrappers = []any{}
+	file_manager_radar_proto_msgTypes[23].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manager_radar_proto_rawDesc), len(file_manager_radar_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   29,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

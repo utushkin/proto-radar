@@ -135,20 +135,28 @@ message UpdateDeviceRequest {
   Device device = 1;
 }
 
-message ExportTypesParams {
+message ExportTypeParam {
   string field = 1;
   int32 required = 2;
 }
 
-message GetExportTypesResponse {
+message ExportType {
   string id = 1;
   string full_name = 2;
-  repeated ExportTypesParams parameters = 3;
+  repeated ExportTypeParam parameters = 3;
+}
+
+message GetExportTypesResponse {
+  repeated ExportType types = 1;
+}
+
+message ExportStatus {
+  string id = 1;
+  string full_name = 2;
 }
 
 message GetExportStatusesResponse {
-  string id = 1;
-  string full_name = 2;
+  repeated ExportStatus statuses = 1;
 }
 
 // Структура экспорта
@@ -169,7 +177,7 @@ message ListExport {
   string export_type = 3;
   string host = 4;
   int32 port = 5;
-  bool state = 6;
+  bool export_on = 6;
 }
 
 // Ответ сервиса
