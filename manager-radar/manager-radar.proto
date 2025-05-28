@@ -135,6 +135,71 @@ message UpdateDeviceRequest {
   Device device = 1;
 }
 
+message ExportTypesParams {
+  string field = 1;
+  int32 required = 2;
+}
+
+message GetExportTypesResponse {
+  string id = 1;
+  string full_name = 2;
+  repeated ExportTypesParams parameters = 3;
+}
+
+message GetExportStatusesResponse {
+  string id = 1;
+  string full_name = 2;
+}
+
+// Структура экспорта
+message Export {
+  string  id = 1;
+  string name = 2;
+  string export_type = 3;
+  int32 interval = 4;
+  optional string host = 5;
+  optional int32 port = 6;
+  optional string login = 7;
+  optional string password = 8;
+}
+
+message ListExport {
+  string  id = 1;
+  string name = 2;
+  string export_type = 3;
+  string host = 4;
+  int32 port = 5;
+  bool state = 6;
+}
+
+// Ответ сервиса
+message ExportResponse {
+  Export export = 1; // Ответ с экспортом (при создании или обновлении)
+}
+// Ответ сервиса
+message ExportsResponse {
+  repeated ListExport exports = 1; // Ответ с массивом экспортов (при получении всех)
+}
+
+// Запрос на создание экспорта
+message CreateExportRequest {
+  Export export = 1; // экспорт для создания
+}
+
+// Запрос на обновление экспорта
+message UpdateExportRequest {
+  Export export = 1; // Обновленные данные экспорта
+}
+
+// Запрос на получение информации о радаре по ID
+message GetExportRequest {
+  string id = 1; // Идентификатор радара
+}
+
+// Запрос на удаление радара по ID
+message DeleteExportRequest {
+  string id = 1; // Идентификатор радара
+}
 
 // Определение сервиса радара
 service RadarService {
@@ -151,4 +216,13 @@ service RadarService {
   rpc UpdateDevice(UpdateDeviceRequest) returns (DeviceResponse);
 
   rpc GetTransportObjectInfo(GetTransportObjectInfoRequest) returns (GetTransportObjectInfoResponse);
+
+  rpc GetExportsTypes(google.protobuf.Empty) returns (GetExportTypesResponse);
+  rpc GetExportStatuses(google.protobuf.Empty) returns (GetExportStatusesResponse);
+
+  rpc CreateExport(CreateExportRequest) returns (ExportResponse);
+  rpc UpdateExport(UpdateExportRequest) returns (ExportResponse);
+  rpc GetExport(GetExportRequest) returns (ExportResponse);
+  rpc GetAllExports(google.protobuf.Empty) returns (ExportsResponse);
+  rpc DeleteExport(DeleteExportRequest) returns (ExportResponse);
 }
