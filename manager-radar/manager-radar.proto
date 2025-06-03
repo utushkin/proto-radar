@@ -137,7 +137,6 @@ message UpdateDeviceRequest {
 
 message ExportTypeParam {
   string field = 1;
-  bool required = 2;
 }
 
 message ExportType {
@@ -166,9 +165,12 @@ message Export {
   string export_type = 3;
   int32 interval = 4;
   optional string host = 5;
-  optional int32 port = 6;
+  optional string port = 6;
   optional string login = 7;
   optional string password = 8;
+  optional string queue = 9;
+  optional string virtual_host = 10;
+  optional string routing_key = 11;
 }
 
 message ListExport {
@@ -180,9 +182,40 @@ message ListExport {
   bool export_on = 6;
 }
 
+message ExportEvent {
+  string  id = 1;
+  string  export_id = 2;
+  int64 date = 3;
+  string name = 4;
+  int64 export_start_date = 5;
+  int64 export_finish_date = 6;
+  string export_status = 7;
+}
+
+message ExportsEventsFilter {
+  repeated string export_ids = 1;
+  repeated string statuses = 2;
+  int64  export_start_date_from = 3;
+  int64  export_start_date_to = 4;
+}
+
+message GetExportsEventsRequest {
+  int64 page = 1; // номер страницы
+  int64 pageSize = 2; // кол-во объектов на странице
+  ExportsEventsFilter filter = 3;
+}
+
+// Ответ сервиса
+message GetExportsEventsResponse {
+  repeated ExportEvent exportsEvents = 1; // Ответ с экспортом (при создании или обновлении)
+}
 // Ответ сервиса
 message ExportResponse {
   Export export = 1; // Ответ с экспортом (при создании или обновлении)
+}
+// Ответ сервиса
+message ExportIdResponse {
+  string exportId = 1;
 }
 // Ответ сервиса
 message ExportsResponse {
@@ -209,6 +242,17 @@ message DeleteExportRequest {
   string id = 1; // Идентификатор радара
 }
 
+// Запрос на вкл/выкл радара по ID
+message ChangeExportStateRequest {
+  string id = 1; // Идентификатор радара
+  bool export_on = 2; 
+}
+
+message ChangeExportStateResponse {
+  string id = 1; // Идентификатор радара
+  bool export_on = 2; 
+}
+
 // Определение сервиса радара
 service RadarService {
   rpc CreateRadar(CreateRadarRequest) returns (RadarResponse);
@@ -232,5 +276,7 @@ service RadarService {
   rpc UpdateExport(UpdateExportRequest) returns (ExportResponse);
   rpc GetExport(GetExportRequest) returns (ExportResponse);
   rpc GetAllExports(google.protobuf.Empty) returns (ExportsResponse);
-  rpc DeleteExport(DeleteExportRequest) returns (ExportResponse);
+  rpc DeleteExport(DeleteExportRequest) returns (ExportIdResponse);
+  rpc ChangeExportState(ChangeExportStateRequest) returns (ChangeExportStateResponse);
+  rpc GetExportEvents(GetExportsEventsRequest) returns (GetExportsEventsResponse);
 }

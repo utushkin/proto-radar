@@ -37,6 +37,8 @@ const (
 	RadarService_GetExport_FullMethodName              = "/radar.RadarService/GetExport"
 	RadarService_GetAllExports_FullMethodName          = "/radar.RadarService/GetAllExports"
 	RadarService_DeleteExport_FullMethodName           = "/radar.RadarService/DeleteExport"
+	RadarService_ChangeExportState_FullMethodName      = "/radar.RadarService/ChangeExportState"
+	RadarService_GetExportEvents_FullMethodName        = "/radar.RadarService/GetExportEvents"
 )
 
 // RadarServiceClient is the client API for RadarService service.
@@ -61,7 +63,9 @@ type RadarServiceClient interface {
 	UpdateExport(ctx context.Context, in *UpdateExportRequest, opts ...grpc.CallOption) (*ExportResponse, error)
 	GetExport(ctx context.Context, in *GetExportRequest, opts ...grpc.CallOption) (*ExportResponse, error)
 	GetAllExports(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ExportsResponse, error)
-	DeleteExport(ctx context.Context, in *DeleteExportRequest, opts ...grpc.CallOption) (*ExportResponse, error)
+	DeleteExport(ctx context.Context, in *DeleteExportRequest, opts ...grpc.CallOption) (*ExportIdResponse, error)
+	ChangeExportState(ctx context.Context, in *ChangeExportStateRequest, opts ...grpc.CallOption) (*ChangeExportStateResponse, error)
+	GetExportEvents(ctx context.Context, in *GetExportsEventsRequest, opts ...grpc.CallOption) (*GetExportsEventsResponse, error)
 }
 
 type radarServiceClient struct {
@@ -232,10 +236,30 @@ func (c *radarServiceClient) GetAllExports(ctx context.Context, in *emptypb.Empt
 	return out, nil
 }
 
-func (c *radarServiceClient) DeleteExport(ctx context.Context, in *DeleteExportRequest, opts ...grpc.CallOption) (*ExportResponse, error) {
+func (c *radarServiceClient) DeleteExport(ctx context.Context, in *DeleteExportRequest, opts ...grpc.CallOption) (*ExportIdResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ExportResponse)
+	out := new(ExportIdResponse)
 	err := c.cc.Invoke(ctx, RadarService_DeleteExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) ChangeExportState(ctx context.Context, in *ChangeExportStateRequest, opts ...grpc.CallOption) (*ChangeExportStateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ChangeExportStateResponse)
+	err := c.cc.Invoke(ctx, RadarService_ChangeExportState_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) GetExportEvents(ctx context.Context, in *GetExportsEventsRequest, opts ...grpc.CallOption) (*GetExportsEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetExportsEventsResponse)
+	err := c.cc.Invoke(ctx, RadarService_GetExportEvents_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +288,9 @@ type RadarServiceServer interface {
 	UpdateExport(context.Context, *UpdateExportRequest) (*ExportResponse, error)
 	GetExport(context.Context, *GetExportRequest) (*ExportResponse, error)
 	GetAllExports(context.Context, *emptypb.Empty) (*ExportsResponse, error)
-	DeleteExport(context.Context, *DeleteExportRequest) (*ExportResponse, error)
+	DeleteExport(context.Context, *DeleteExportRequest) (*ExportIdResponse, error)
+	ChangeExportState(context.Context, *ChangeExportStateRequest) (*ChangeExportStateResponse, error)
+	GetExportEvents(context.Context, *GetExportsEventsRequest) (*GetExportsEventsResponse, error)
 	mustEmbedUnimplementedRadarServiceServer()
 }
 
@@ -323,8 +349,14 @@ func (UnimplementedRadarServiceServer) GetExport(context.Context, *GetExportRequ
 func (UnimplementedRadarServiceServer) GetAllExports(context.Context, *emptypb.Empty) (*ExportsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllExports not implemented")
 }
-func (UnimplementedRadarServiceServer) DeleteExport(context.Context, *DeleteExportRequest) (*ExportResponse, error) {
+func (UnimplementedRadarServiceServer) DeleteExport(context.Context, *DeleteExportRequest) (*ExportIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExport not implemented")
+}
+func (UnimplementedRadarServiceServer) ChangeExportState(context.Context, *ChangeExportStateRequest) (*ChangeExportStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeExportState not implemented")
+}
+func (UnimplementedRadarServiceServer) GetExportEvents(context.Context, *GetExportsEventsRequest) (*GetExportsEventsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExportEvents not implemented")
 }
 func (UnimplementedRadarServiceServer) mustEmbedUnimplementedRadarServiceServer() {}
 func (UnimplementedRadarServiceServer) testEmbeddedByValue()                      {}
@@ -653,6 +685,42 @@ func _RadarService_DeleteExport_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RadarService_ChangeExportState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeExportStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).ChangeExportState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_ChangeExportState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).ChangeExportState(ctx, req.(*ChangeExportStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RadarService_GetExportEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExportsEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).GetExportEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_GetExportEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).GetExportEvents(ctx, req.(*GetExportsEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RadarService_ServiceDesc is the grpc.ServiceDesc for RadarService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -727,6 +795,14 @@ var RadarService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteExport",
 			Handler:    _RadarService_DeleteExport_Handler,
+		},
+		{
+			MethodName: "ChangeExportState",
+			Handler:    _RadarService_ChangeExportState_Handler,
+		},
+		{
+			MethodName: "GetExportEvents",
+			Handler:    _RadarService_GetExportEvents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
