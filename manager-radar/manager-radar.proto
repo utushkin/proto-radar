@@ -178,7 +178,7 @@ message ListExport {
   string name = 2;
   string export_type = 3;
   string host = 4;
-  int32 port = 5;
+  string port = 5;
   bool export_on = 6;
 }
 

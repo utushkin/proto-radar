@@ -1568,7 +1568,7 @@ type ListExport struct {
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	ExportType    string                 `protobuf:"bytes,3,opt,name=export_type,json=exportType,proto3" json:"export_type,omitempty"`
 	Host          string                 `protobuf:"bytes,4,opt,name=host,proto3" json:"host,omitempty"`
-	Port          int32                  `protobuf:"varint,5,opt,name=port,proto3" json:"port,omitempty"`
+	Port          string                 `protobuf:"bytes,5,opt,name=port,proto3" json:"port,omitempty"`
 	ExportOn      bool                   `protobuf:"varint,6,opt,name=export_on,json=exportOn,proto3" json:"export_on,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1632,11 +1632,11 @@ func (x *ListExport) GetHost() string {
 	return ""
 }
 
-func (x *ListExport) GetPort() int32 {
+func (x *ListExport) GetPort() string {
 	if x != nil {
 		return x.Port
 	}
-	return 0
+	return ""
 }
 
 func (x *ListExport) GetExportOn() bool {
@@ -2502,7 +2502,7 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\vexport_type\x18\x03 \x01(\tR\n" +
 	"exportType\x12\x12\n" +
 	"\x04host\x18\x04 \x01(\tR\x04host\x12\x12\n" +
-	"\x04port\x18\x05 \x01(\x05R\x04port\x12\x1b\n" +
+	"\x04port\x18\x05 \x01(\tR\x04port\x12\x1b\n" +
 	"\texport_on\x18\x06 \x01(\bR\bexportOn\"\xe1\x01\n" +
 	"\vExportEvent\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
