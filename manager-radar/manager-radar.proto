@@ -208,7 +208,11 @@ message GetExportsEventsRequest {
 // Ответ сервиса
 message GetExportsEventsResponse {
   repeated ExportEvent exportsEvents = 1; // Ответ с экспортом (при создании или обновлении)
+  int64 page = 2;
+  int64 page_size = 3;
+  int64 total_items = 4;
 }
+
 // Ответ сервиса
 message ExportResponse {
   Export export = 1; // Ответ с экспортом (при создании или обновлении)

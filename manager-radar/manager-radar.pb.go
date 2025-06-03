@@ -1870,6 +1870,9 @@ func (x *GetExportsEventsRequest) GetFilter() *ExportsEventsFilter {
 type GetExportsEventsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ExportsEvents []*ExportEvent         `protobuf:"bytes,1,rep,name=exportsEvents,proto3" json:"exportsEvents,omitempty"` // Ответ с экспортом (при создании или обновлении)
+	Page          int64                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int64                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	TotalItems    int64                  `protobuf:"varint,4,opt,name=total_items,json=totalItems,proto3" json:"total_items,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1909,6 +1912,27 @@ func (x *GetExportsEventsResponse) GetExportsEvents() []*ExportEvent {
 		return x.ExportsEvents
 	}
 	return nil
+}
+
+func (x *GetExportsEventsResponse) GetPage() int64 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetExportsEventsResponse) GetPageSize() int64 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *GetExportsEventsResponse) GetTotalItems() int64 {
+	if x != nil {
+		return x.TotalItems
+	}
+	return 0
 }
 
 // Ответ сервиса
@@ -2497,9 +2521,13 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\x17GetExportsEventsRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1a\n" +
 	"\bpageSize\x18\x02 \x01(\x03R\bpageSize\x122\n" +
-	"\x06filter\x18\x03 \x01(\v2\x1a.radar.ExportsEventsFilterR\x06filter\"T\n" +
+	"\x06filter\x18\x03 \x01(\v2\x1a.radar.ExportsEventsFilterR\x06filter\"\xa6\x01\n" +
 	"\x18GetExportsEventsResponse\x128\n" +
-	"\rexportsEvents\x18\x01 \x03(\v2\x12.radar.ExportEventR\rexportsEvents\"7\n" +
+	"\rexportsEvents\x18\x01 \x03(\v2\x12.radar.ExportEventR\rexportsEvents\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\x03R\x04page\x12\x1b\n" +
+	"\tpage_size\x18\x03 \x01(\x03R\bpageSize\x12\x1f\n" +
+	"\vtotal_items\x18\x04 \x01(\x03R\n" +
+	"totalItems\"7\n" +
 	"\x0eExportResponse\x12%\n" +
 	"\x06export\x18\x01 \x01(\v2\r.radar.ExportR\x06export\".\n" +
 	"\x10ExportIdResponse\x12\x1a\n" +
