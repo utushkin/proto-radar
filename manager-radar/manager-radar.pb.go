@@ -1451,6 +1451,7 @@ type Export struct {
 	Queue         *string                `protobuf:"bytes,9,opt,name=queue,proto3,oneof" json:"queue,omitempty"`
 	VirtualHost   *string                `protobuf:"bytes,10,opt,name=virtual_host,json=virtualHost,proto3,oneof" json:"virtual_host,omitempty"`
 	RoutingKey    *string                `protobuf:"bytes,11,opt,name=routing_key,json=routingKey,proto3,oneof" json:"routing_key,omitempty"`
+	Exchange      *string                `protobuf:"bytes,12,opt,name=exchange,proto3,oneof" json:"exchange,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1558,6 +1559,13 @@ func (x *Export) GetVirtualHost() string {
 func (x *Export) GetRoutingKey() string {
 	if x != nil && x.RoutingKey != nil {
 		return *x.RoutingKey
+	}
+	return ""
+}
+
+func (x *Export) GetExchange() string {
+	if x != nil && x.Exchange != nil {
+		return *x.Exchange
 	}
 	return ""
 }
@@ -2472,7 +2480,7 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\tfull_name\x18\x02 \x01(\tR\bfullName\"L\n" +
 	"\x19GetExportStatusesResponse\x12/\n" +
-	"\bstatuses\x18\x01 \x03(\v2\x13.radar.ExportStatusR\bstatuses\"\x94\x03\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x13.radar.ExportStatusR\bstatuses\"\xc2\x03\n" +
 	"\x06Export\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1f\n" +
@@ -2487,14 +2495,16 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\fvirtual_host\x18\n" +
 	" \x01(\tH\x05R\vvirtualHost\x88\x01\x01\x12$\n" +
 	"\vrouting_key\x18\v \x01(\tH\x06R\n" +
-	"routingKey\x88\x01\x01B\a\n" +
+	"routingKey\x88\x01\x01\x12\x1f\n" +
+	"\bexchange\x18\f \x01(\tH\aR\bexchange\x88\x01\x01B\a\n" +
 	"\x05_hostB\a\n" +
 	"\x05_portB\b\n" +
 	"\x06_loginB\v\n" +
 	"\t_passwordB\b\n" +
 	"\x06_queueB\x0f\n" +
 	"\r_virtual_hostB\x0e\n" +
-	"\f_routing_key\"\x96\x01\n" +
+	"\f_routing_keyB\v\n" +
+	"\t_exchange\"\x96\x01\n" +
 	"\n" +
 	"ListExport\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +

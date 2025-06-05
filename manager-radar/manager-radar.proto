@@ -162,15 +162,16 @@ message GetExportStatusesResponse {
 message Export {
   string  id = 1;
   string name = 2;
-  string export_type = 3;
+  string export_type = 3 [json_name = "exportType"];
   int32 interval = 4;
   optional string host = 5;
   optional string port = 6;
   optional string login = 7;
   optional string password = 8;
   optional string queue = 9;
-  optional string virtual_host = 10;
-  optional string routing_key = 11;
+  optional string virtual_host = 10 [json_name = "virtualHost"];
+  optional string routing_key = 11 [json_name = "routingKey"];
+  optional string exchange = 12;
 }
 
 message ListExport {
