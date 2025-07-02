@@ -249,8 +249,7 @@ message ChangeExportStateResponse {
 }
 
 message Point {
-  double x = 1;
-  double y = 2;
+  repeated double coords = 1;  // Всегда ровно 2 элемента: [x, y]
 }
 
 message PolylineCoords {

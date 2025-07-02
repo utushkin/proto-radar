@@ -2290,8 +2290,7 @@ func (x *ChangeExportStateResponse) GetExportOn() bool {
 
 type Point struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	X             float64                `protobuf:"fixed64,1,opt,name=x,proto3" json:"x,omitempty"`
-	Y             float64                `protobuf:"fixed64,2,opt,name=y,proto3" json:"y,omitempty"`
+	Coords        []float64              `protobuf:"fixed64,1,rep,packed,name=coords,proto3" json:"coords,omitempty"` // Всегда ровно 2 элемента: [x, y]
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2326,18 +2325,11 @@ func (*Point) Descriptor() ([]byte, []int) {
 	return file_manager_radar_proto_rawDescGZIP(), []int{36}
 }
 
-func (x *Point) GetX() float64 {
+func (x *Point) GetCoords() []float64 {
 	if x != nil {
-		return x.X
+		return x.Coords
 	}
-	return 0
-}
-
-func (x *Point) GetY() float64 {
-	if x != nil {
-		return x.Y
-	}
-	return 0
+	return nil
 }
 
 type PolylineCoords struct {
@@ -2985,10 +2977,9 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\texport_on\x18\x02 \x01(\bR\bexportOn\"H\n" +
 	"\x19ChangeExportStateResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
-	"\texport_on\x18\x02 \x01(\bR\bexportOn\"#\n" +
-	"\x05Point\x12\f\n" +
-	"\x01x\x18\x01 \x01(\x01R\x01x\x12\f\n" +
-	"\x01y\x18\x02 \x01(\x01R\x01y\"6\n" +
+	"\texport_on\x18\x02 \x01(\bR\bexportOn\"\x1f\n" +
+	"\x05Point\x12\x16\n" +
+	"\x06coords\x18\x01 \x03(\x01R\x06coords\"6\n" +
 	"\x0ePolylineCoords\x12$\n" +
 	"\x06points\x18\x01 \x03(\v2\f.radar.PointR\x06points\"\xa5\x02\n" +
 	"\rControlPoints\x12.\n" +
