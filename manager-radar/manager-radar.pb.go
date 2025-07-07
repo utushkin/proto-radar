@@ -1889,10 +1889,9 @@ func (x *GetExportsEventsRequest) GetFilter() *ExportsEventsFilter {
 	return nil
 }
 
-// Ответ сервиса
 type GetExportsEventsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ExportsEvents []*ExportEvent         `protobuf:"bytes,1,rep,name=exportsEvents,proto3" json:"exportsEvents,omitempty"` // Ответ с экспортом (при создании или обновлении)
+	ExportsEvents []*ExportEvent         `protobuf:"bytes,1,rep,name=exportsEvents,proto3" json:"exportsEvents,omitempty"`
 	Page          int64                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	PageSize      int64                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	TotalItems    int64                  `protobuf:"varint,4,opt,name=total_items,json=totalItems,proto3" json:"total_items,omitempty"`
@@ -1958,10 +1957,9 @@ func (x *GetExportsEventsResponse) GetTotalItems() int64 {
 	return 0
 }
 
-// Ответ сервиса
 type ExportResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Export        *Export                `protobuf:"bytes,1,opt,name=export,proto3" json:"export,omitempty"` // Ответ с экспортом (при создании или обновлении)
+	Export        *Export                `protobuf:"bytes,1,opt,name=export,proto3" json:"export,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2003,7 +2001,6 @@ func (x *ExportResponse) GetExport() *Export {
 	return nil
 }
 
-// Ответ сервиса
 type ExportIdResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ExportId      string                 `protobuf:"bytes,1,opt,name=exportId,proto3" json:"exportId,omitempty"`
@@ -2048,10 +2045,9 @@ func (x *ExportIdResponse) GetExportId() string {
 	return ""
 }
 
-// Ответ сервиса
 type ExportsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Exports       []*ListExport          `protobuf:"bytes,1,rep,name=exports,proto3" json:"exports,omitempty"` // Ответ с массивом экспортов (при получении всех)
+	Exports       []*ListExport          `protobuf:"bytes,1,rep,name=exports,proto3" json:"exports,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2093,10 +2089,9 @@ func (x *ExportsResponse) GetExports() []*ListExport {
 	return nil
 }
 
-// Запрос на создание экспорта
 type CreateExportRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Export        *Export                `protobuf:"bytes,1,opt,name=export,proto3" json:"export,omitempty"` // экспорт для создания
+	Export        *Export                `protobuf:"bytes,1,opt,name=export,proto3" json:"export,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2138,10 +2133,9 @@ func (x *CreateExportRequest) GetExport() *Export {
 	return nil
 }
 
-// Запрос на обновление экспорта
 type UpdateExportRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Export        *Export                `protobuf:"bytes,1,opt,name=export,proto3" json:"export,omitempty"` // Обновленные данные экспорта
+	Export        *Export                `protobuf:"bytes,1,opt,name=export,proto3" json:"export,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2183,10 +2177,9 @@ func (x *UpdateExportRequest) GetExport() *Export {
 	return nil
 }
 
-// Запрос на вкл/выкл радара по ID
 type ChangeExportStateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // Идентификатор радара
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	ExportOn      bool                   `protobuf:"varint,2,opt,name=export_on,json=exportOn,proto3" json:"export_on,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2238,7 +2231,7 @@ func (x *ChangeExportStateRequest) GetExportOn() bool {
 
 type ChangeExportStateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // Идентификатор радара
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	ExportOn      bool                   `protobuf:"varint,2,opt,name=export_on,json=exportOn,proto3" json:"export_on,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2462,14 +2455,13 @@ func (x *ControlPoints) GetCurveControl() *Point {
 
 type Lane struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                          // Идентификатор полосы
-	RadarId       string                 `protobuf:"bytes,2,opt,name=radar_id,json=radarId,proto3" json:"radar_id,omitempty"` // Идентификатор радара
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                      // Название полосы
-	Direction     string                 `protobuf:"bytes,4,opt,name=direction,proto3" json:"direction,omitempty"`            // Название полосы
-	Coords        *PolylineCoords        `protobuf:"bytes,5,opt,name=coords,proto3" json:"coords,omitempty"`                  // координаты полосы
-	ArrowPoints   *PolylineCoords        `protobuf:"bytes,6,opt,name=arrowPoints,proto3" json:"arrowPoints,omitempty"`        // координаты стрелки
-	ControlPoints *ControlPoints         `protobuf:"bytes,7,opt,name=controlPoints,proto3" json:"controlPoints,omitempty"`    // точки для рисования полосы
-	Width         int32                  `protobuf:"varint,8,opt,name=width,proto3" json:"width,omitempty"`                   // Ширина полосы
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                       // Идентификатор полосы
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                   // Название полосы
+	Direction     string                 `protobuf:"bytes,3,opt,name=direction,proto3" json:"direction,omitempty"`         // Название полосы
+	Coords        *PolylineCoords        `protobuf:"bytes,4,opt,name=coords,proto3" json:"coords,omitempty"`               // координаты полосы
+	ArrowPoints   *PolylineCoords        `protobuf:"bytes,5,opt,name=arrowPoints,proto3" json:"arrowPoints,omitempty"`     // координаты стрелки
+	ControlPoints *ControlPoints         `protobuf:"bytes,6,opt,name=controlPoints,proto3" json:"controlPoints,omitempty"` // точки для рисования полосы
+	Width         int32                  `protobuf:"varint,7,opt,name=width,proto3" json:"width,omitempty"`                // Ширина полосы
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2507,13 +2499,6 @@ func (*Lane) Descriptor() ([]byte, []int) {
 func (x *Lane) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return ""
-}
-
-func (x *Lane) GetRadarId() string {
-	if x != nil {
-		return x.RadarId
 	}
 	return ""
 }
@@ -2560,10 +2545,9 @@ func (x *Lane) GetWidth() int32 {
 	return 0
 }
 
-// Ответ сервиса
 type LaneResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Lane          *Lane                  `protobuf:"bytes,1,opt,name=lane,proto3" json:"lane,omitempty"` // Ответ с экспортом (при создании или обновлении)
+	Lane          *Lane                  `protobuf:"bytes,1,opt,name=lane,proto3" json:"lane,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2605,10 +2589,9 @@ func (x *LaneResponse) GetLane() *Lane {
 	return nil
 }
 
-// Ответ сервиса
 type LanesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Lanes         []*Lane                `protobuf:"bytes,1,rep,name=lanes,proto3" json:"lanes,omitempty"` // Ответ с массивом экспортов (при получении всех)
+	Lanes         []*Lane                `protobuf:"bytes,1,rep,name=lanes,proto3" json:"lanes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2694,17 +2677,69 @@ func (x *GetDirectionTypesResponse) GetTypes() []*Type {
 	return nil
 }
 
-// Запрос на создание экспорта
+type LaneRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	RadarId       string                 `protobuf:"bytes,2,opt,name=radarId,proto3" json:"radarId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LaneRequest) Reset() {
+	*x = LaneRequest{}
+	mi := &file_manager_radar_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LaneRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LaneRequest) ProtoMessage() {}
+
+func (x *LaneRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_manager_radar_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LaneRequest.ProtoReflect.Descriptor instead.
+func (*LaneRequest) Descriptor() ([]byte, []int) {
+	return file_manager_radar_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *LaneRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *LaneRequest) GetRadarId() string {
+	if x != nil {
+		return x.RadarId
+	}
+	return ""
+}
+
 type CreateLaneRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Lane          *Lane                  `protobuf:"bytes,1,opt,name=lane,proto3" json:"lane,omitempty"` // экспорт для создания
+	RadarId       string                 `protobuf:"bytes,1,opt,name=radarId,proto3" json:"radarId,omitempty"`
+	Lane          *Lane                  `protobuf:"bytes,2,opt,name=lane,proto3" json:"lane,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateLaneRequest) Reset() {
 	*x = CreateLaneRequest{}
-	mi := &file_manager_radar_proto_msgTypes[43]
+	mi := &file_manager_radar_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2716,7 +2751,7 @@ func (x *CreateLaneRequest) String() string {
 func (*CreateLaneRequest) ProtoMessage() {}
 
 func (x *CreateLaneRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[43]
+	mi := &file_manager_radar_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2729,7 +2764,14 @@ func (x *CreateLaneRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLaneRequest.ProtoReflect.Descriptor instead.
 func (*CreateLaneRequest) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{43}
+	return file_manager_radar_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *CreateLaneRequest) GetRadarId() string {
+	if x != nil {
+		return x.RadarId
+	}
+	return ""
 }
 
 func (x *CreateLaneRequest) GetLane() *Lane {
@@ -2739,17 +2781,17 @@ func (x *CreateLaneRequest) GetLane() *Lane {
 	return nil
 }
 
-// Запрос на обновление экспорта
 type UpdateLaneRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Lane          *Lane                  `protobuf:"bytes,1,opt,name=lane,proto3" json:"lane,omitempty"` // Обновленные данные экспорта
+	RadarId       string                 `protobuf:"bytes,1,opt,name=radarId,proto3" json:"radarId,omitempty"`
+	Lane          *Lane                  `protobuf:"bytes,2,opt,name=lane,proto3" json:"lane,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateLaneRequest) Reset() {
 	*x = UpdateLaneRequest{}
-	mi := &file_manager_radar_proto_msgTypes[44]
+	mi := &file_manager_radar_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2761,7 +2803,7 @@ func (x *UpdateLaneRequest) String() string {
 func (*UpdateLaneRequest) ProtoMessage() {}
 
 func (x *UpdateLaneRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_manager_radar_proto_msgTypes[44]
+	mi := &file_manager_radar_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2774,7 +2816,14 @@ func (x *UpdateLaneRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLaneRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLaneRequest) Descriptor() ([]byte, []int) {
-	return file_manager_radar_proto_rawDescGZIP(), []int{44}
+	return file_manager_radar_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *UpdateLaneRequest) GetRadarId() string {
+	if x != nil {
+		return x.RadarId
+	}
+	return ""
 }
 
 func (x *UpdateLaneRequest) GetLane() *Lane {
@@ -2990,26 +3039,30 @@ const file_manager_radar_proto_rawDesc = "" +
 	"widthStart\x12(\n" +
 	"\bwidthEnd\x18\x04 \x01(\v2\f.radar.PointR\bwidthEnd\x12.\n" +
 	"\vmoveControl\x18\x05 \x01(\v2\f.radar.PointR\vmoveControl\x120\n" +
-	"\fcurveControl\x18\x06 \x01(\v2\f.radar.PointR\fcurveControl\"\x9d\x02\n" +
+	"\fcurveControl\x18\x06 \x01(\v2\f.radar.PointR\fcurveControl\"\x82\x02\n" +
 	"\x04Lane\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
-	"\bradar_id\x18\x02 \x01(\tR\aradarId\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x1c\n" +
-	"\tdirection\x18\x04 \x01(\tR\tdirection\x12-\n" +
-	"\x06coords\x18\x05 \x01(\v2\x15.radar.PolylineCoordsR\x06coords\x127\n" +
-	"\varrowPoints\x18\x06 \x01(\v2\x15.radar.PolylineCoordsR\varrowPoints\x12:\n" +
-	"\rcontrolPoints\x18\a \x01(\v2\x14.radar.ControlPointsR\rcontrolPoints\x12\x14\n" +
-	"\x05width\x18\b \x01(\x05R\x05width\"/\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1c\n" +
+	"\tdirection\x18\x03 \x01(\tR\tdirection\x12-\n" +
+	"\x06coords\x18\x04 \x01(\v2\x15.radar.PolylineCoordsR\x06coords\x127\n" +
+	"\varrowPoints\x18\x05 \x01(\v2\x15.radar.PolylineCoordsR\varrowPoints\x12:\n" +
+	"\rcontrolPoints\x18\x06 \x01(\v2\x14.radar.ControlPointsR\rcontrolPoints\x12\x14\n" +
+	"\x05width\x18\a \x01(\x05R\x05width\"/\n" +
 	"\fLaneResponse\x12\x1f\n" +
 	"\x04lane\x18\x01 \x01(\v2\v.radar.LaneR\x04lane\"2\n" +
 	"\rLanesResponse\x12!\n" +
 	"\x05lanes\x18\x01 \x03(\v2\v.radar.LaneR\x05lanes\">\n" +
 	"\x19GetDirectionTypesResponse\x12!\n" +
-	"\x05types\x18\x01 \x03(\v2\v.radar.TypeR\x05types\"4\n" +
-	"\x11CreateLaneRequest\x12\x1f\n" +
-	"\x04lane\x18\x01 \x01(\v2\v.radar.LaneR\x04lane\"4\n" +
-	"\x11UpdateLaneRequest\x12\x1f\n" +
-	"\x04lane\x18\x01 \x01(\v2\v.radar.LaneR\x04lane2\x8e\r\n" +
+	"\x05types\x18\x01 \x03(\v2\v.radar.TypeR\x05types\"7\n" +
+	"\vLaneRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
+	"\aradarId\x18\x02 \x01(\tR\aradarId\"N\n" +
+	"\x11CreateLaneRequest\x12\x18\n" +
+	"\aradarId\x18\x01 \x01(\tR\aradarId\x12\x1f\n" +
+	"\x04lane\x18\x02 \x01(\v2\v.radar.LaneR\x04lane\"N\n" +
+	"\x11UpdateLaneRequest\x12\x18\n" +
+	"\aradarId\x18\x01 \x01(\tR\aradarId\x12\x1f\n" +
+	"\x04lane\x18\x02 \x01(\v2\v.radar.LaneR\x04lane2\x92\r\n" +
 	"\fRadarService\x12>\n" +
 	"\vCreateRadar\x12\x19.radar.CreateRadarRequest\x1a\x14.radar.RadarResponse\x12>\n" +
 	"\vUpdateRadar\x12\x19.radar.UpdateRadarRequest\x1a\x14.radar.RadarResponse\x122\n" +
@@ -3033,11 +3086,11 @@ const file_manager_radar_proto_rawDesc = "" +
 	"\n" +
 	"CreateLane\x12\x18.radar.CreateLaneRequest\x1a\x13.radar.LaneResponse\x12;\n" +
 	"\n" +
-	"UpdateLane\x12\x18.radar.UpdateLaneRequest\x1a\x13.radar.LaneResponse\x120\n" +
-	"\aGetLane\x12\x10.radar.IdRequest\x1a\x13.radar.LaneResponse\x12;\n" +
-	"\vGetAllLanes\x12\x16.google.protobuf.Empty\x1a\x14.radar.LanesResponse\x121\n" +
+	"UpdateLane\x12\x18.radar.UpdateLaneRequest\x1a\x13.radar.LaneResponse\x122\n" +
+	"\aGetLane\x12\x12.radar.LaneRequest\x1a\x13.radar.LaneResponse\x12;\n" +
+	"\vGetAllLanes\x12\x16.google.protobuf.Empty\x1a\x14.radar.LanesResponse\x123\n" +
 	"\n" +
-	"DeleteLane\x12\x10.radar.IdRequest\x1a\x11.radar.IdResponse\x12M\n" +
+	"DeleteLane\x12\x12.radar.LaneRequest\x1a\x11.radar.IdResponse\x12M\n" +
 	"\x11GetDirectionTypes\x12\x16.google.protobuf.Empty\x1a .radar.GetDirectionTypesResponseB!Z\x1fgl.npo-its.ru/radar/proto-radarb\x06proto3"
 
 var (
@@ -3052,7 +3105,7 @@ func file_manager_radar_proto_rawDescGZIP() []byte {
 	return file_manager_radar_proto_rawDescData
 }
 
-var file_manager_radar_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
+var file_manager_radar_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
 var file_manager_radar_proto_goTypes = []any{
 	(*IdRequest)(nil),                      // 0: radar.IdRequest
 	(*IdResponse)(nil),                     // 1: radar.IdResponse
@@ -3097,10 +3150,11 @@ var file_manager_radar_proto_goTypes = []any{
 	(*LaneResponse)(nil),                   // 40: radar.LaneResponse
 	(*LanesResponse)(nil),                  // 41: radar.LanesResponse
 	(*GetDirectionTypesResponse)(nil),      // 42: radar.GetDirectionTypesResponse
-	(*CreateLaneRequest)(nil),              // 43: radar.CreateLaneRequest
-	(*UpdateLaneRequest)(nil),              // 44: radar.UpdateLaneRequest
-	(*timestamppb.Timestamp)(nil),          // 45: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                  // 46: google.protobuf.Empty
+	(*LaneRequest)(nil),                    // 43: radar.LaneRequest
+	(*CreateLaneRequest)(nil),              // 44: radar.CreateLaneRequest
+	(*UpdateLaneRequest)(nil),              // 45: radar.UpdateLaneRequest
+	(*timestamppb.Timestamp)(nil),          // 46: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                  // 47: google.protobuf.Empty
 }
 var file_manager_radar_proto_depIdxs = []int32{
 	3,  // 0: radar.RadarResponse.radar:type_name -> radar.Radar
@@ -3108,11 +3162,11 @@ var file_manager_radar_proto_depIdxs = []int32{
 	3,  // 2: radar.CreateRadarRequest.radar:type_name -> radar.Radar
 	3,  // 3: radar.UpdateRadarRequest.radar:type_name -> radar.Radar
 	8,  // 4: radar.GetTransportObjectInfoRequest.filter:type_name -> radar.RecognitionsFilter
-	45, // 5: radar.TransportObjectInfo.created_at:type_name -> google.protobuf.Timestamp
+	46, // 5: radar.TransportObjectInfo.created_at:type_name -> google.protobuf.Timestamp
 	10, // 6: radar.GetTransportObjectInfoResponse.data:type_name -> radar.TransportObjectInfo
 	13, // 7: radar.TimeZonesResponse.time_zones:type_name -> radar.TimeZone
 	15, // 8: radar.RadarModelsResponse.models:type_name -> radar.RadarModel
-	45, // 9: radar.Device.production_date:type_name -> google.protobuf.Timestamp
+	46, // 9: radar.Device.production_date:type_name -> google.protobuf.Timestamp
 	16, // 10: radar.DeviceResponse.device:type_name -> radar.Device
 	16, // 11: radar.UpdateDeviceRequest.device:type_name -> radar.Device
 	19, // 12: radar.ExportType.parameters:type_name -> radar.ExportTypeParam
@@ -3142,28 +3196,28 @@ var file_manager_radar_proto_depIdxs = []int32{
 	6,  // 36: radar.RadarService.CreateRadar:input_type -> radar.CreateRadarRequest
 	7,  // 37: radar.RadarService.UpdateRadar:input_type -> radar.UpdateRadarRequest
 	0,  // 38: radar.RadarService.GetRadar:input_type -> radar.IdRequest
-	46, // 39: radar.RadarService.GetAllRadars:input_type -> google.protobuf.Empty
+	47, // 39: radar.RadarService.GetAllRadars:input_type -> google.protobuf.Empty
 	0,  // 40: radar.RadarService.DeleteRadar:input_type -> radar.IdRequest
-	46, // 41: radar.RadarService.GetTimeZones:input_type -> google.protobuf.Empty
-	46, // 42: radar.RadarService.GetRadarModels:input_type -> google.protobuf.Empty
-	46, // 43: radar.RadarService.GetDevice:input_type -> google.protobuf.Empty
+	47, // 41: radar.RadarService.GetTimeZones:input_type -> google.protobuf.Empty
+	47, // 42: radar.RadarService.GetRadarModels:input_type -> google.protobuf.Empty
+	47, // 43: radar.RadarService.GetDevice:input_type -> google.protobuf.Empty
 	18, // 44: radar.RadarService.UpdateDevice:input_type -> radar.UpdateDeviceRequest
 	9,  // 45: radar.RadarService.GetTransportObjectInfo:input_type -> radar.GetTransportObjectInfoRequest
-	46, // 46: radar.RadarService.GetExportsTypes:input_type -> google.protobuf.Empty
-	46, // 47: radar.RadarService.GetExportStatuses:input_type -> google.protobuf.Empty
+	47, // 46: radar.RadarService.GetExportsTypes:input_type -> google.protobuf.Empty
+	47, // 47: radar.RadarService.GetExportStatuses:input_type -> google.protobuf.Empty
 	32, // 48: radar.RadarService.CreateExport:input_type -> radar.CreateExportRequest
 	33, // 49: radar.RadarService.UpdateExport:input_type -> radar.UpdateExportRequest
 	0,  // 50: radar.RadarService.GetExport:input_type -> radar.IdRequest
-	46, // 51: radar.RadarService.GetAllExports:input_type -> google.protobuf.Empty
+	47, // 51: radar.RadarService.GetAllExports:input_type -> google.protobuf.Empty
 	0,  // 52: radar.RadarService.DeleteExport:input_type -> radar.IdRequest
 	34, // 53: radar.RadarService.ChangeExportState:input_type -> radar.ChangeExportStateRequest
 	27, // 54: radar.RadarService.GetExportEvents:input_type -> radar.GetExportsEventsRequest
-	43, // 55: radar.RadarService.CreateLane:input_type -> radar.CreateLaneRequest
-	44, // 56: radar.RadarService.UpdateLane:input_type -> radar.UpdateLaneRequest
-	0,  // 57: radar.RadarService.GetLane:input_type -> radar.IdRequest
-	46, // 58: radar.RadarService.GetAllLanes:input_type -> google.protobuf.Empty
-	0,  // 59: radar.RadarService.DeleteLane:input_type -> radar.IdRequest
-	46, // 60: radar.RadarService.GetDirectionTypes:input_type -> google.protobuf.Empty
+	44, // 55: radar.RadarService.CreateLane:input_type -> radar.CreateLaneRequest
+	45, // 56: radar.RadarService.UpdateLane:input_type -> radar.UpdateLaneRequest
+	43, // 57: radar.RadarService.GetLane:input_type -> radar.LaneRequest
+	47, // 58: radar.RadarService.GetAllLanes:input_type -> google.protobuf.Empty
+	43, // 59: radar.RadarService.DeleteLane:input_type -> radar.LaneRequest
+	47, // 60: radar.RadarService.GetDirectionTypes:input_type -> google.protobuf.Empty
 	4,  // 61: radar.RadarService.CreateRadar:output_type -> radar.RadarResponse
 	4,  // 62: radar.RadarService.UpdateRadar:output_type -> radar.RadarResponse
 	4,  // 63: radar.RadarService.GetRadar:output_type -> radar.RadarResponse
@@ -3210,7 +3264,7 @@ func file_manager_radar_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manager_radar_proto_rawDesc), len(file_manager_radar_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   45,
+			NumMessages:   46,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
