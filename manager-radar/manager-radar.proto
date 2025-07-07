@@ -206,45 +206,45 @@ message GetExportsEventsRequest {
   ExportsEventsFilter filter = 3;
 }
 
-// Ответ сервиса
+
 message GetExportsEventsResponse {
-  repeated ExportEvent exportsEvents = 1; // Ответ с экспортом (при создании или обновлении)
+  repeated ExportEvent exportsEvents = 1; 
   int64 page = 2;
   int64 page_size = 3;
   int64 total_items = 4;
 }
 
-// Ответ сервиса
+
 message ExportResponse {
-  Export export = 1; // Ответ с экспортом (при создании или обновлении)
+  Export export = 1; 
 }
-// Ответ сервиса
+
 message ExportIdResponse {
   string exportId = 1;
 }
-// Ответ сервиса
+
 message ExportsResponse {
-  repeated ListExport exports = 1; // Ответ с массивом экспортов (при получении всех)
+  repeated ListExport exports = 1; 
 }
 
-// Запрос на создание экспорта
+
 message CreateExportRequest {
-  Export export = 1; // экспорт для создания
+  Export export = 1; 
 }
 
-// Запрос на обновление экспорта
+
 message UpdateExportRequest {
-  Export export = 1; // Обновленные данные экспорта
+  Export export = 1; 
 }
 
-// Запрос на вкл/выкл радара по ID
+
 message ChangeExportStateRequest {
-  string id = 1; // Идентификатор радара
+  string id = 1; 
   bool export_on = 2; 
 }
 
 message ChangeExportStateResponse {
-  string id = 1; // Идентификатор радара
+  string id = 1; 
   bool export_on = 2; 
 }
 
@@ -267,40 +267,43 @@ message ControlPoints {
 
 message Lane {
   string  id = 1; // Идентификатор полосы
-  string  radar_id = 2; // Идентификатор радара
-  string name = 3; // Название полосы
-  string direction = 4; // Название полосы
-  PolylineCoords coords = 5; // координаты полосы
-  PolylineCoords arrowPoints = 6; // координаты стрелки
-  ControlPoints controlPoints = 7; // точки для рисования полосы
-  int32 width = 8; // Ширина полосы
+  string name = 2; // Название полосы
+  string direction = 3; // Название полосы
+  PolylineCoords coords = 4; // координаты полосы
+  PolylineCoords arrowPoints = 5; // координаты стрелки
+  ControlPoints controlPoints = 6; // точки для рисования полосы
+  int32 width = 7; // Ширина полосы
 }
 
-// Ответ сервиса
 message LaneResponse {
-  Lane lane = 1; // Ответ с экспортом (при создании или обновлении)
+  Lane lane = 1; 
 }
 
-// Ответ сервиса
+
 message LanesResponse {
-  repeated Lane lanes = 1; // Ответ с массивом экспортов (при получении всех)
+  repeated Lane lanes = 1; 
 }
 
 message GetDirectionTypesResponse {
   repeated Type types = 1;
 }
 
-// Запрос на создание экспорта
+
+message LaneRequest {
+  string id = 1; 
+  string radarId = 2;
+}
+
 message CreateLaneRequest {
-  Lane lane = 1; // экспорт для создания
+  string radarId = 1;
+  Lane lane = 2;
 }
 
-// Запрос на обновление экспорта
 message UpdateLaneRequest {
-  Lane lane = 1; // Обновленные данные экспорта
+  string radarId = 1;
+  Lane lane = 2;
 }
 
-// Определение сервиса радара
 service RadarService {
   rpc CreateRadar(CreateRadarRequest) returns (RadarResponse);
   rpc UpdateRadar(UpdateRadarRequest) returns (RadarResponse);
@@ -329,8 +332,8 @@ service RadarService {
 
   rpc CreateLane(CreateLaneRequest) returns (LaneResponse);
   rpc UpdateLane(UpdateLaneRequest) returns (LaneResponse);
-  rpc GetLane(IdRequest) returns (LaneResponse);
+  rpc GetLane(LaneRequest) returns (LaneResponse);
   rpc GetAllLanes(google.protobuf.Empty) returns (LanesResponse);
-  rpc DeleteLane(IdRequest) returns (IdResponse);
+  rpc DeleteLane(LaneRequest) returns (IdResponse);
   rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
 }

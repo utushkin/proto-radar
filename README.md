@@ -20,7 +20,7 @@
 - `cd manager-radar/`
 - `protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative --experimental_allow_proto3_optional manager-radar.proto`
 - `git tag` - проверить последний tag + переключаемся на последний тег
-- `git checkout -b fix-for-v0.1.0 v0.1.0` - текущий последний тег
+- `git checkout -b fix-for-v0.1.0 v0.1.0` - переключаемся на последнюю ветку, создаем текущий последний тег
 - `git add .`
 - `git commit -m ""`
 - `git tag v0.1.11` - добавить следующий по счету tag
@@ -28,7 +28,7 @@
 
 ## Разворачивание сервисов gRPC
 
-- на серверной части используем команду `go get github.com/utushkin/proto-radar` для обновления до последнего тега (адрес используем тот который указали в поле option в файле .proto)
+- на серверной части используем команду `go get github.com/utushkin/proto-radar@v0.1.11` для обновления до последнего тега (адрес используем тот который указали в поле option в файле .proto)
 <!-- - на серверной части используем команду `go get gl.npo-its.ru/radar/proto-radar` для обновления до последнего тега (адрес используем тот который указали в поле option в файле .proto) -->
 
 ## Удаление тегов
