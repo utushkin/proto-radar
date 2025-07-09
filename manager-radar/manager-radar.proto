@@ -272,7 +272,7 @@ message Lane {
   PolylineCoords coords = 4; // координаты полосы
   PolylineCoords arrowPoints = 5; // координаты стрелки
   ControlPoints controlPoints = 6; // точки для рисования полосы
-  int32 width = 7; // Ширина полосы
+  float width = 7; // Ширина полосы
 }
 
 message LaneResponse {
@@ -292,6 +292,10 @@ message GetDirectionTypesResponse {
 message LaneRequest {
   string id = 1; 
   string radarId = 2;
+}
+
+message LanesRequest {
+  string radarId = 1;
 }
 
 message CreateLaneRequest {
@@ -333,7 +337,7 @@ service RadarService {
   rpc CreateLane(CreateLaneRequest) returns (LaneResponse);
   rpc UpdateLane(UpdateLaneRequest) returns (LaneResponse);
   rpc GetLane(LaneRequest) returns (LaneResponse);
-  rpc GetAllLanes(google.protobuf.Empty) returns (LanesResponse);
+  rpc GetAllLanes(LanesRequest) returns (LanesResponse);
   rpc DeleteLane(LaneRequest) returns (IdResponse);
   rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
 }
