@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package radarService;
+
+option go_package = "gl.npo-its.ru/radar/proto-radar";
+
+// Сервис для взаимодействия с радаром
+service RadarService {
+  // Получение всех параметров радара
+  rpc GetSensorState(GetSensorStateRequest) returns (SensorStateResponse);
+
+  // Выставление базовых настроек радара
+  rpc SetSensorParams(SetSensorParamsRequest) returns (SensorStateResponse);
+
+  // Выставление/получение конкретного параметра сенсора
+  rpc ManageSensorParam(ManageSensorParamRequest) returns (ManageSensorParamResponse);
+
+  // Выставление параметров Lane
+  rpc ManageLanes(ManageLanesRequest) returns (ManageLanesResponse);
+}
+
+// Запрос на получение состояния сенсора
+message GetSensorStateRequest {
+  string sensor_id = 1;
+}
+
+// Запрос на установку параметров сенсора
+message SetSensorParamsRequest {
+  string sensor_id = 1;
+}
+
+// Запрос на управление параметрами сенсора
+message ManageSensorParamRequest {
+  string sensor_id = 1;
+  string mode = 2; // "r" - чтение, "rw" - чтение/запись
+  repeated ParamState state = 3;
+}
+
+// Состояние параметра
+message ParamState {
+  string param = 1;
+  double value = 2;
+}
+
+// Ответ на управление параметрами сенсора
+message ManageSensorParamResponse {
+  string sensor_id = 1;
+  repeated ParamState state = 2;
+}
+
+// Запрос на управление полосами
+message ManageLanesRequest {
+  string sensor_id = 1;
+  string mode = 2; // "r" - чтение, "rw" - чтение/запись
+  repeated LaneRequest lane = 3;
+}
+
+// Запрос для одной полосы
+message LaneRequest {
+  int32 number = 1;
+  int32 width = 2;
+  int32 bidirectional = 3;
+  repeated Coordinate coordinate = 4;
+}
+
+// Ответ на управление полосами
+message ManageLanesResponse {
+  string sensor_id = 1;
+  repeated LaneResponse lane = 2;
+}
+
+// Ответ для одной полосы
+message LaneResponse {
+  int32 number = 1;
+  int32 width = 2;
+  int32 bidirectional = 3;
+  repeated Coordinate coordinate = 4;
+}
+
+// Координата
+message Coordinate {
+  double x = 1;
+  double y = 2;
+}
+
+// Полный ответ состояния сенсора
+message SensorStateResponse {
+  string sensor_id = 1;
+  ConnectionParams connection_params = 2;
+  Params params = 3;
+}
+
+// Параметры подключения
+message ConnectionParams {
+  string sensor_ip = 1;
+  int32 sensor_port = 2;
+}
+
+// Основные параметры
+message Params {
+  double x = 1;
+  double y = 2;
+  double height = 3;
+  double xy_orientation = 4;
+  double xz_orientation = 5;
+  int32 waveform_selector = 6;
+  int32 tx_power_selector = 7;
+  map<int32, Line> lines = 8;
+}
+
+// Линия/полоса
+message Line {
+  int32 width = 1;
+  int32 bidirectional = 2;
+  map<int32, Coordinate> coordinates = 3;
+}
