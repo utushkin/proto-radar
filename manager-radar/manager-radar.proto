@@ -7,6 +7,19 @@ option go_package = "gl.npo-its.ru/radar/proto-radar";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
+message IdRequest {
+  string id = 1; // Идентификатор радара
+}
+
+// Ответ сервиса
+message IdResponse {
+  string id = 1;           // UUID созданной/удалённой сущности
+}
+
+message Type {
+  string id = 1;
+  string full_name = 2;
+}
 
 // Структура радара
 message Radar {
@@ -15,11 +28,13 @@ message Radar {
   double lat = 3;
   double lon = 4;
   float azimuth = 5; // Азимут
-  optional string direction = 6; // Направление
-  string address = 7; // Адрес
-  string ip = 8; // IP-адрес
-  string serial = 9; // Серийный номер
-  string model = 10; // Модель радара
+  float angle = 6; // Угол наклона
+  float height = 7; // Высота
+  optional string direction = 8; // Направление
+  string address = 9; // Адрес
+  string ip = 10; // IP-адрес
+  string serial = 11; // Серийный номер
+  string model = 12; // Модель радара
 }
 
 // Ответ сервиса
@@ -82,16 +97,6 @@ message GetTransportObjectInfoResponse {
   int64 total_items = 4;
 }
 
-// Запрос на получение информации о радаре по ID
-message GetRadarRequest {
-  string id = 1; // Идентификатор радара
-}
-
-// Запрос на удаление радара по ID
-message DeleteRadarRequest {
-  string id = 1; // Идентификатор радара
-}
-
 // Ответ с временными зонами
 message TimeZonesResponse {
   repeated TimeZone time_zones = 1; // Список временных зон
@@ -135,32 +140,38 @@ message UpdateDeviceRequest {
   Device device = 1;
 }
 
-message ExportTypesParams {
+message ExportTypeParam {
   string field = 1;
-  int32 required = 2;
+}
+
+message ExportType {
+  string id = 1;
+  string full_name = 2;
+  repeated ExportTypeParam parameters = 3;
 }
 
 message GetExportTypesResponse {
-  string id = 1;
-  string full_name = 2;
-  repeated ExportTypesParams parameters = 3;
+  repeated ExportType types = 1;
 }
 
 message GetExportStatusesResponse {
-  string id = 1;
-  string full_name = 2;
+  repeated Type statuses = 1;
 }
 
 // Структура экспорта
 message Export {
   string  id = 1;
   string name = 2;
-  string export_type = 3;
+  string export_type = 3 [json_name = "exportType"];
   int32 interval = 4;
   optional string host = 5;
-  optional int32 port = 6;
+  optional string port = 6;
   optional string login = 7;
   optional string password = 8;
+  optional string queue = 9;
+  optional string virtual_host = 10 [json_name = "virtualHost"];
+  optional string routing_key = 11 [json_name = "routingKey"];
+  optional string exchange = 12;
 }
 
 message ListExport {
@@ -168,46 +179,141 @@ message ListExport {
   string name = 2;
   string export_type = 3;
   string host = 4;
-  int32 port = 5;
-  bool state = 6;
+  string port = 5;
+  bool export_on = 6;
 }
 
-// Ответ сервиса
+message ExportEvent {
+  string  id = 1;
+  string  export_id = 2;
+  int64 date = 3;
+  string name = 4;
+  int64 export_start_date = 5;
+  int64 export_finish_date = 6;
+  string export_status = 7;
+}
+
+message ExportsEventsFilter {
+  repeated string export_ids = 1;
+  repeated string statuses = 2;
+  int64  export_start_date_from = 3;
+  int64  export_start_date_to = 4;
+}
+
+message GetExportsEventsRequest {
+  int64 page = 1; // номер страницы
+  int64 pageSize = 2; // кол-во объектов на странице
+  ExportsEventsFilter filter = 3;
+}
+
+
+message GetExportsEventsResponse {
+  repeated ExportEvent exportsEvents = 1;
+  int64 page = 2;
+  int64 page_size = 3;
+  int64 total_items = 4;
+}
+
+
 message ExportResponse {
-  Export export = 1; // Ответ с экспортом (при создании или обновлении)
+  Export export = 1;
 }
-// Ответ сервиса
+
+message ExportIdResponse {
+  string exportId = 1;
+}
+
 message ExportsResponse {
-  repeated ListExport exports = 1; // Ответ с массивом экспортов (при получении всех)
+  repeated ListExport exports = 1;
 }
 
-// Запрос на создание экспорта
+
 message CreateExportRequest {
-  Export export = 1; // экспорт для создания
+  Export export = 1;
 }
 
-// Запрос на обновление экспорта
+
 message UpdateExportRequest {
-  Export export = 1; // Обновленные данные экспорта
+  Export export = 1;
 }
 
-// Запрос на получение информации о радаре по ID
-message GetExportRequest {
-  string id = 1; // Идентификатор радара
+
+message ChangeExportStateRequest {
+  string id = 1;
+  bool export_on = 2;
 }
 
-// Запрос на удаление радара по ID
-message DeleteExportRequest {
-  string id = 1; // Идентификатор радара
+message ChangeExportStateResponse {
+  string id = 1;
+  bool export_on = 2;
 }
 
-// Определение сервиса радара
+message Point {
+  repeated double coords = 1;  // Всегда ровно 2 элемента: [x, y]
+}
+
+message PolylineCoords {
+  repeated Point points = 1;  // [[x1,y1], [x2,y2], ...]
+}
+
+message ControlPoints {
+  Point lengthStart = 1;    // [number, number]
+  Point lengthEnd = 2;      // [number, number]
+  Point widthStart = 3;     // [number, number]
+  Point widthEnd = 4;       // [number, number]
+  Point moveControl = 5;    // [number, number]
+  Point curveControl = 6;   // [number, number]
+}
+
+message Lane {
+  string  id = 1; // Идентификатор полосы
+  string name = 2; // Название полосы
+  string direction = 3; // Название полосы
+  PolylineCoords coords = 4; // координаты полосы
+  PolylineCoords arrowPoints = 5; // координаты стрелки
+  ControlPoints controlPoints = 6; // точки для рисования полосы
+  float width = 7; // Ширина полосы
+}
+
+message LaneResponse {
+  Lane lane = 1;
+}
+
+
+message LanesResponse {
+  repeated Lane lanes = 1;
+}
+
+message GetDirectionTypesResponse {
+  repeated Type types = 1;
+}
+
+
+message LaneRequest {
+  string id = 1;
+  string radarId = 2;
+}
+
+message LanesRequest {
+  string radarId = 1;
+}
+
+message CreateLaneRequest {
+  string radarId = 1;
+  Lane lane = 2;
+}
+
+message UpdateLaneRequest {
+  string radarId = 1;
+  Lane lane = 2;
+}
+
 service RadarService {
   rpc CreateRadar(CreateRadarRequest) returns (RadarResponse);
   rpc UpdateRadar(UpdateRadarRequest) returns (RadarResponse);
-  rpc GetRadar(GetRadarRequest) returns (RadarResponse);
+  rpc GetRadar(IdRequest) returns (RadarResponse);
   rpc GetAllRadars(google.protobuf.Empty) returns (RadarsResponse);
-  rpc DeleteRadar(DeleteRadarRequest) returns (RadarResponse);
+  rpc DeleteRadar(IdRequest) returns (RadarResponse);
 
   rpc GetTimeZones(google.protobuf.Empty) returns (TimeZonesResponse);
   rpc GetRadarModels(google.protobuf.Empty) returns (RadarModelsResponse);
@@ -222,7 +328,16 @@ service RadarService {
 
   rpc CreateExport(CreateExportRequest) returns (ExportResponse);
   rpc UpdateExport(UpdateExportRequest) returns (ExportResponse);
-  rpc GetExport(GetExportRequest) returns (ExportResponse);
+  rpc GetExport(IdRequest) returns (ExportResponse);
   rpc GetAllExports(google.protobuf.Empty) returns (ExportsResponse);
-  rpc DeleteExport(DeleteExportRequest) returns (ExportResponse);
+  rpc DeleteExport(IdRequest) returns (ExportIdResponse);
+  rpc ChangeExportState(ChangeExportStateRequest) returns (ChangeExportStateResponse);
+  rpc GetExportEvents(GetExportsEventsRequest) returns (GetExportsEventsResponse);
+
+  rpc CreateLane(CreateLaneRequest) returns (LaneResponse);
+  rpc UpdateLane(UpdateLaneRequest) returns (LaneResponse);
+  rpc GetLane(LaneRequest) returns (LaneResponse);
+  rpc GetAllLanes(LanesRequest) returns (LanesResponse);
+  rpc DeleteLane(LaneRequest) returns (IdResponse);
+  rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
 }
