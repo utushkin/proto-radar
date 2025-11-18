@@ -23,6 +23,7 @@ const (
 	RadarService_SetSensorParams_FullMethodName   = "/radarService.RadarService/SetSensorParams"
 	RadarService_ManageSensorParam_FullMethodName = "/radarService.RadarService/ManageSensorParam"
 	RadarService_ManageLanes_FullMethodName       = "/radarService.RadarService/ManageLanes"
+	RadarService_SettingRadar_FullMethodName      = "/radarService.RadarService/SettingRadar"
 )
 
 // RadarServiceClient is the client API for RadarService service.
@@ -39,6 +40,8 @@ type RadarServiceClient interface {
 	ManageSensorParam(ctx context.Context, in *ManageSensorParamRequest, opts ...grpc.CallOption) (*ManageSensorParamResponse, error)
 	// Выставление параметров Lane
 	ManageLanes(ctx context.Context, in *ManageLanesRequest, opts ...grpc.CallOption) (*ManageLanesResponse, error)
+	// Комплексная настройка радара с полосами
+	SettingRadar(ctx context.Context, in *SettingRadarRequest, opts ...grpc.CallOption) (*SettingRadarResponse, error)
 }
 
 type radarServiceClient struct {
@@ -89,6 +92,16 @@ func (c *radarServiceClient) ManageLanes(ctx context.Context, in *ManageLanesReq
 	return out, nil
 }
 
+func (c *radarServiceClient) SettingRadar(ctx context.Context, in *SettingRadarRequest, opts ...grpc.CallOption) (*SettingRadarResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SettingRadarResponse)
+	err := c.cc.Invoke(ctx, RadarService_SettingRadar_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RadarServiceServer is the server API for RadarService service.
 // All implementations must embed UnimplementedRadarServiceServer
 // for forward compatibility.
@@ -103,6 +116,8 @@ type RadarServiceServer interface {
 	ManageSensorParam(context.Context, *ManageSensorParamRequest) (*ManageSensorParamResponse, error)
 	// Выставление параметров Lane
 	ManageLanes(context.Context, *ManageLanesRequest) (*ManageLanesResponse, error)
+	// Комплексная настройка радара с полосами
+	SettingRadar(context.Context, *SettingRadarRequest) (*SettingRadarResponse, error)
 	mustEmbedUnimplementedRadarServiceServer()
 }
 
@@ -124,6 +139,9 @@ func (UnimplementedRadarServiceServer) ManageSensorParam(context.Context, *Manag
 }
 func (UnimplementedRadarServiceServer) ManageLanes(context.Context, *ManageLanesRequest) (*ManageLanesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ManageLanes not implemented")
+}
+func (UnimplementedRadarServiceServer) SettingRadar(context.Context, *SettingRadarRequest) (*SettingRadarResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SettingRadar not implemented")
 }
 func (UnimplementedRadarServiceServer) mustEmbedUnimplementedRadarServiceServer() {}
 func (UnimplementedRadarServiceServer) testEmbeddedByValue()                      {}
@@ -218,6 +236,24 @@ func _RadarService_ManageLanes_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RadarService_SettingRadar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SettingRadarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).SettingRadar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_SettingRadar_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).SettingRadar(ctx, req.(*SettingRadarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RadarService_ServiceDesc is the grpc.ServiceDesc for RadarService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -240,6 +276,10 @@ var RadarService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ManageLanes",
 			Handler:    _RadarService_ManageLanes_Handler,
+		},
+		{
+			MethodName: "SettingRadar",
+			Handler:    _RadarService_SettingRadar_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

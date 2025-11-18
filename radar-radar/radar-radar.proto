@@ -17,9 +17,48 @@ service RadarService {
 
   // Выставление параметров Lane
   rpc ManageLanes(ManageLanesRequest) returns (ManageLanesResponse);
+
+  // Комплексная настройка радара с полосами
+  rpc SettingRadar(SettingRadarRequest) returns (SettingRadarResponse);
 }
 
-// Запрос на получение состояния сенсора
+// Запрос на комплексную настройку радара
+message SettingRadarRequest {
+  string sensor_id = 1;
+  repeated double coords = 2; // [x, y]
+  double azimuth = 3;
+  double angle = 4;
+  double height = 5;
+  repeated SensorLane lanes = 6;
+}
+
+// Ответ на комплексную настройку радара
+message SettingRadarResponse {
+  string sensor_id = 1;
+  repeated double coords = 2;
+  double azimuth = 3;
+  double angle = 4;
+  double height = 5;
+  repeated SensorLane lanes = 6;
+  string status = 7; // "success" или "error"
+  string message = 8; // Описание результата операции
+}
+
+// Представление полосы для комплексной настройки
+message SensorLane {
+  string id = 1;
+  int32 direction = 2;
+  repeated Point coords = 3;
+  int32 width = 4;
+}
+
+// Точка в 2D пространстве
+message Point {
+  double x = 1;
+  double y = 2;
+}
+
+// Остальные сообщения остаются без изменений
 message GetSensorStateRequest {
   string sensor_id = 1;
 }
