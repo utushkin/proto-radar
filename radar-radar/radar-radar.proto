@@ -50,6 +50,7 @@ message SensorLane {
   int32 direction = 2;
   repeated Point coords = 3;
   int32 width = 4;
+  int32 number_lane = 5;
 }
 
 // Точка в 2D пространстве
@@ -126,7 +127,7 @@ message Coordinate {
 message SensorStateResponse {
   string sensor_id = 1;
   ConnectionParams connection_params = 2;
-  Params params = 3;
+  SettingRadarResponse params = 3;
 }
 
 // Параметры подключения
