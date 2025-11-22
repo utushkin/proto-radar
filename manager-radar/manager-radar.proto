@@ -340,4 +340,77 @@ service RadarService {
   rpc GetAllLanes(LanesRequest) returns (LanesResponse);
   rpc DeleteLane(LaneRequest) returns (IdResponse);
   rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
+
+  rpc CreateRadarWithLanes(CreateRadarWithLanesRequest) returns (RadarWithLanesResponse);
+  rpc UpdateRadarWithLanes(UpdateRadarWithLanesRequest) returns (RadarWithLanesResponse);
+  rpc GetRadarWithLanes(IdRequest) returns (RadarWithLanesResponse);
+  rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
+  rpc DeleteRadarWithLanes(IdRequest) returns (IdResponse);
+}
+
+message Point2D {
+  double x = 1;
+  double y = 2;
+}
+
+// Сообщение для ControlPoints
+message SensorControlPoints {
+  Point2D length_start = 1;
+  Point2D length_end = 2;
+  Point2D width_start = 3;
+  Point2D width_end = 4;
+  Point2D move_control = 5;
+  Point2D curve_control = 6;
+}
+
+// Сообщение для SensorLane
+message SensorLane {
+  string id = 1;
+  string name = 2;
+  int32 direction = 3;
+  repeated Point2D coords = 4;           // координаты полосы в плоской системе координат
+  repeated Point2D polygon = 5;          // координаты полосы
+  repeated Point2D arrow_points = 6;     // координаты стрелки
+  SensorControlPoints control_points = 7; // точки для рисования полосы
+  int32 width = 8;                       // Ширина полосы
+  int32 number_lane = 9;                 // Номер полосы
+}
+
+// Сообщение для RadarWithLanes
+message RadarWithLanes {
+  string id = 1;
+  string name = 2;
+  double lat = 3;
+  double lon = 4;
+  repeated double coords = 5;    // массив float64
+  float azimuth = 6;
+  float angle = 7;
+  double height = 8;
+  string direction = 9;
+  string address = 10;
+  string ip = 11;
+  string serial = 12;
+  string model = 13;
+  repeated SensorLane lanes = 14;
+}
+
+// Запрос на создание радара с полосами
+message CreateRadarWithLanesRequest {
+  RadarWithLanes radar = 1;
+}
+
+// Запрос на обновление радара с полосами
+message UpdateRadarWithLanesRequest {
+  string id = 1;
+  RadarWithLanes radar = 2;
+}
+
+// Ответ с радаром с полосами
+message RadarWithLanesResponse {
+  RadarWithLanes radar = 1;
+}
+
+// Ответ с массивом радаров с полосами
+message RadarsWithLanesResponse {
+  repeated RadarWithLanes radars = 1;
 }
