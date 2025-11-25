@@ -372,7 +372,7 @@ message SensorLane {
   repeated Point2D polygon = 5;          // координаты полосы
   repeated Point2D arrow_points = 6;     // координаты стрелки
   SensorControlPoints control_points = 7; // точки для рисования полосы
-  int32 width = 8;                       // Ширина полосы
+  float width = 8;                       // Ширина полосы
   int32 number_lane = 9;                 // Номер полосы
 }
 
@@ -391,7 +391,9 @@ message RadarWithLanes {
   string ip = 11;
   string serial = 12;
   string model = 13;
-  repeated SensorLane lanes = 14;
+  int32 waveform_selector = 14; // 100 waveform_selector (выбор формы сигнала) Значение: 1 (65 MHz / 96 RG) По умолчанию: 0 (145 MHz / 168 RG)
+  int32 tx_power_selector = 15; // 104 (уровень мощности передатчика) Значение: 1 (высокая мощность) По умолчанию: 1
+  repeated SensorLane lanes = 16;
 }
 
 // Запрос на создание радара с полосами
