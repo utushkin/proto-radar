@@ -86,9 +86,9 @@ type RadarServiceClient interface {
 	GetDirectionTypes(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDirectionTypesResponse, error)
 	CreateRadarWithLanes(ctx context.Context, in *CreateRadarWithLanesRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
 	UpdateRadarWithLanes(ctx context.Context, in *UpdateRadarWithLanesRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
-	GetRadarWithLanes(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
+	GetRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
 	GetAllRadarsWithLanes(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RadarsWithLanesResponse, error)
-	DeleteRadarWithLanes(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*IdResponse, error)
+	DeleteRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error)
 	CreateSensor(ctx context.Context, in *CreateSensorRequest, opts ...grpc.CallOption) (*CreateSensorResponse, error)
 	UpdateSensor(ctx context.Context, in *UpdateSensorRequest, opts ...grpc.CallOption) (*UpdateSensorResponse, error)
 	GetAllSensor(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetAllSensorResponse, error)
@@ -372,7 +372,7 @@ func (c *radarServiceClient) UpdateRadarWithLanes(ctx context.Context, in *Updat
 	return out, nil
 }
 
-func (c *radarServiceClient) GetRadarWithLanes(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error) {
+func (c *radarServiceClient) GetRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RadarWithLanesResponse)
 	err := c.cc.Invoke(ctx, RadarService_GetRadarWithLanes_FullMethodName, in, out, cOpts...)
@@ -392,9 +392,9 @@ func (c *radarServiceClient) GetAllRadarsWithLanes(ctx context.Context, in *empt
 	return out, nil
 }
 
-func (c *radarServiceClient) DeleteRadarWithLanes(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*IdResponse, error) {
+func (c *radarServiceClient) DeleteRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(IdResponse)
+	out := new(SerialResponse)
 	err := c.cc.Invoke(ctx, RadarService_DeleteRadarWithLanes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -463,9 +463,9 @@ type RadarServiceServer interface {
 	GetDirectionTypes(context.Context, *empty.Empty) (*GetDirectionTypesResponse, error)
 	CreateRadarWithLanes(context.Context, *CreateRadarWithLanesRequest) (*RadarWithLanesResponse, error)
 	UpdateRadarWithLanes(context.Context, *UpdateRadarWithLanesRequest) (*RadarWithLanesResponse, error)
-	GetRadarWithLanes(context.Context, *IdRequest) (*RadarWithLanesResponse, error)
+	GetRadarWithLanes(context.Context, *SerialRequest) (*RadarWithLanesResponse, error)
 	GetAllRadarsWithLanes(context.Context, *empty.Empty) (*RadarsWithLanesResponse, error)
-	DeleteRadarWithLanes(context.Context, *IdRequest) (*IdResponse, error)
+	DeleteRadarWithLanes(context.Context, *SerialRequest) (*SerialResponse, error)
 	CreateSensor(context.Context, *CreateSensorRequest) (*CreateSensorResponse, error)
 	UpdateSensor(context.Context, *UpdateSensorRequest) (*UpdateSensorResponse, error)
 	GetAllSensor(context.Context, *empty.Empty) (*GetAllSensorResponse, error)
@@ -560,13 +560,13 @@ func (UnimplementedRadarServiceServer) CreateRadarWithLanes(context.Context, *Cr
 func (UnimplementedRadarServiceServer) UpdateRadarWithLanes(context.Context, *UpdateRadarWithLanesRequest) (*RadarWithLanesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRadarWithLanes not implemented")
 }
-func (UnimplementedRadarServiceServer) GetRadarWithLanes(context.Context, *IdRequest) (*RadarWithLanesResponse, error) {
+func (UnimplementedRadarServiceServer) GetRadarWithLanes(context.Context, *SerialRequest) (*RadarWithLanesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRadarWithLanes not implemented")
 }
 func (UnimplementedRadarServiceServer) GetAllRadarsWithLanes(context.Context, *empty.Empty) (*RadarsWithLanesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllRadarsWithLanes not implemented")
 }
-func (UnimplementedRadarServiceServer) DeleteRadarWithLanes(context.Context, *IdRequest) (*IdResponse, error) {
+func (UnimplementedRadarServiceServer) DeleteRadarWithLanes(context.Context, *SerialRequest) (*SerialResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRadarWithLanes not implemented")
 }
 func (UnimplementedRadarServiceServer) CreateSensor(context.Context, *CreateSensorRequest) (*CreateSensorResponse, error) {
@@ -1086,7 +1086,7 @@ func _RadarService_UpdateRadarWithLanes_Handler(srv interface{}, ctx context.Con
 }
 
 func _RadarService_GetRadarWithLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IdRequest)
+	in := new(SerialRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1098,7 +1098,7 @@ func _RadarService_GetRadarWithLanes_Handler(srv interface{}, ctx context.Contex
 		FullMethod: RadarService_GetRadarWithLanes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).GetRadarWithLanes(ctx, req.(*IdRequest))
+		return srv.(RadarServiceServer).GetRadarWithLanes(ctx, req.(*SerialRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1122,7 +1122,7 @@ func _RadarService_GetAllRadarsWithLanes_Handler(srv interface{}, ctx context.Co
 }
 
 func _RadarService_DeleteRadarWithLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IdRequest)
+	in := new(SerialRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1134,7 +1134,7 @@ func _RadarService_DeleteRadarWithLanes_Handler(srv interface{}, ctx context.Con
 		FullMethod: RadarService_DeleteRadarWithLanes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).DeleteRadarWithLanes(ctx, req.(*IdRequest))
+		return srv.(RadarServiceServer).DeleteRadarWithLanes(ctx, req.(*SerialRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

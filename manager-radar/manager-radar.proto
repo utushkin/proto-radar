@@ -8,11 +8,19 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 message IdRequest {
-  uint32 serial_number = 1; // Идентификатор радара
+  string id = 1;
+}
+
+message SerialRequest {
+  uint32 serial_number = 1;
 }
 
 // Ответ сервиса
 message IdResponse {
+  string id = 1;           // UUID созданной/удалённой сущности
+}
+
+message SerialResponse {
   string id = 1;           // UUID созданной/удалённой сущности
   uint32 serial_number = 2;
 }
@@ -344,9 +352,9 @@ service RadarService {
 
   rpc CreateRadarWithLanes(CreateRadarWithLanesRequest) returns (RadarWithLanesResponse);
   rpc UpdateRadarWithLanes(UpdateRadarWithLanesRequest) returns (RadarWithLanesResponse);
-  rpc GetRadarWithLanes(IdRequest) returns (RadarWithLanesResponse);
+  rpc GetRadarWithLanes(SerialRequest) returns (RadarWithLanesResponse);
   rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
-  rpc DeleteRadarWithLanes(IdRequest) returns (IdResponse);
+  rpc DeleteRadarWithLanes(SerialRequest) returns (SerialResponse);
 
   rpc CreateSensor(CreateSensorRequest) returns (CreateSensorResponse);
   rpc UpdateSensor(UpdateSensorRequest) returns (UpdateSensorResponse);
