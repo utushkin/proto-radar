@@ -106,12 +106,12 @@ message AvailableSensor {
 
 // Остальные сообщения остаются без изменений
 message GetStateSensorRequest {
-  string serial_number = 1;
+  uint32 serial_number = 1;
 }
 
 // Запрос на установку параметров сенсора
 message SetDefaultParamsSensorRequest {
-  string serial_number = 1;
+  uint32 serial_number = 1;
 }
 
 // Запрос на управление параметрами сенсора
@@ -170,7 +170,7 @@ message Coordinate {
 
 // Полный ответ состояния сенсора
 message StateSensorResponse {
-  string serial_number = 1;
+  uint32 serial_number = 1;
   ConnectionParams connection_params = 2;
   SetParamSensorResponse params = 3;
 }
