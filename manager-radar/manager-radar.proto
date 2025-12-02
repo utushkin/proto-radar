@@ -346,6 +346,10 @@ service RadarService {
   rpc GetRadarWithLanes(IdRequest) returns (RadarWithLanesResponse);
   rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
   rpc DeleteRadarWithLanes(IdRequest) returns (IdResponse);
+
+  rpc CreateSensor(CreateSensorRequest) returns (CreateSensorResponse);
+  rpc UpdateSensor(UpdateSensorRequest) returns (UpdateSensorResponse);
+  rpc GetAllSensor(google.protobuf.Empty) returns (GetAllSensorResponse);
 }
 
 message Point2D {
@@ -394,6 +398,7 @@ message RadarWithLanes {
   int32 waveform_selector = 14; // 100 waveform_selector (выбор формы сигнала) Значение: 1 (65 MHz / 96 RG) По умолчанию: 0 (145 MHz / 168 RG)
   int32 tx_power_selector = 15; // 104 (уровень мощности передатчика) Значение: 1 (высокая мощность) По умолчанию: 1
   repeated SensorLane lanes = 16;
+  uint32 serial_number = 17;
 }
 
 // Запрос на создание радара с полосами
@@ -415,4 +420,35 @@ message RadarWithLanesResponse {
 // Ответ с массивом радаров с полосами
 message RadarsWithLanesResponse {
   repeated RadarWithLanes radars = 1;
+}
+
+message CreateSensorRequest {
+  Sensor sensor = 1;
+}
+
+
+message CreateSensorResponse {
+  Sensor sensor = 1;
+}
+
+
+message UpdateSensorRequest {
+  Sensor sensor = 1;
+}
+
+
+message UpdateSensorResponse {
+  Sensor sensor = 1;
+}
+
+message GetAllSensorResponse {
+  repeated Sensor sensors = 1;
+}
+
+// Сообщение для RadarWithLanes
+message Sensor {
+  string id = 1;
+  uint32 serial_number = 2; // Серийный номер сенсора
+  string ip = 3;           // IP адрес сенсора
+  int32 port = 4;          // Порт сенсора
 }

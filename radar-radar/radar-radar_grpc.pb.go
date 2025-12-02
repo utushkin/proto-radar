@@ -19,11 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RadarService_GetSensorState_FullMethodName    = "/radarService.RadarService/GetSensorState"
-	RadarService_SetSensorParams_FullMethodName   = "/radarService.RadarService/SetSensorParams"
-	RadarService_ManageSensorParam_FullMethodName = "/radarService.RadarService/ManageSensorParam"
-	RadarService_ManageLanes_FullMethodName       = "/radarService.RadarService/ManageLanes"
-	RadarService_SettingRadar_FullMethodName      = "/radarService.RadarService/SettingRadar"
+	RadarService_SetDefaultParamsSensor_FullMethodName = "/radarService.RadarService/SetDefaultParamsSensor"
+	RadarService_GetStateSensor_FullMethodName         = "/radarService.RadarService/GetStateSensor"
+	RadarService_SetParamSensor_FullMethodName         = "/radarService.RadarService/SetParamSensor"
+	RadarService_GetAvailableSensors_FullMethodName    = "/radarService.RadarService/GetAvailableSensors"
 )
 
 // RadarServiceClient is the client API for RadarService service.
@@ -32,16 +31,14 @@ const (
 //
 // Сервис для взаимодействия с радаром
 type RadarServiceClient interface {
-	// Получение всех параметров радара
-	GetSensorState(ctx context.Context, in *GetSensorStateRequest, opts ...grpc.CallOption) (*SensorStateResponse, error)
 	// Выставление базовых настроек радара
-	SetSensorParams(ctx context.Context, in *SetSensorParamsRequest, opts ...grpc.CallOption) (*SensorStateResponse, error)
-	// Выставление/получение конкретного параметра сенсора
-	ManageSensorParam(ctx context.Context, in *ManageSensorParamRequest, opts ...grpc.CallOption) (*ManageSensorParamResponse, error)
-	// Выставление параметров Lane
-	ManageLanes(ctx context.Context, in *ManageLanesRequest, opts ...grpc.CallOption) (*ManageLanesResponse, error)
+	SetDefaultParamsSensor(ctx context.Context, in *SetDefaultParamsSensorRequest, opts ...grpc.CallOption) (*StateSensorResponse, error)
+	// Получение всех параметров радара
+	GetStateSensor(ctx context.Context, in *GetStateSensorRequest, opts ...grpc.CallOption) (*StateSensorResponse, error)
 	// Комплексная настройка радара с полосами
-	SettingRadar(ctx context.Context, in *SettingRadarRequest, opts ...grpc.CallOption) (*SettingRadarResponse, error)
+	SetParamSensor(ctx context.Context, in *SetParamSensorRequest, opts ...grpc.CallOption) (*SetParamSensorResponse, error)
+	// Получение списка доступных сенсоров
+	GetAvailableSensors(ctx context.Context, in *GetAvailableSensorsRequest, opts ...grpc.CallOption) (*GetAvailableSensorsResponse, error)
 }
 
 type radarServiceClient struct {
@@ -52,50 +49,40 @@ func NewRadarServiceClient(cc grpc.ClientConnInterface) RadarServiceClient {
 	return &radarServiceClient{cc}
 }
 
-func (c *radarServiceClient) GetSensorState(ctx context.Context, in *GetSensorStateRequest, opts ...grpc.CallOption) (*SensorStateResponse, error) {
+func (c *radarServiceClient) SetDefaultParamsSensor(ctx context.Context, in *SetDefaultParamsSensorRequest, opts ...grpc.CallOption) (*StateSensorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SensorStateResponse)
-	err := c.cc.Invoke(ctx, RadarService_GetSensorState_FullMethodName, in, out, cOpts...)
+	out := new(StateSensorResponse)
+	err := c.cc.Invoke(ctx, RadarService_SetDefaultParamsSensor_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *radarServiceClient) SetSensorParams(ctx context.Context, in *SetSensorParamsRequest, opts ...grpc.CallOption) (*SensorStateResponse, error) {
+func (c *radarServiceClient) GetStateSensor(ctx context.Context, in *GetStateSensorRequest, opts ...grpc.CallOption) (*StateSensorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SensorStateResponse)
-	err := c.cc.Invoke(ctx, RadarService_SetSensorParams_FullMethodName, in, out, cOpts...)
+	out := new(StateSensorResponse)
+	err := c.cc.Invoke(ctx, RadarService_GetStateSensor_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *radarServiceClient) ManageSensorParam(ctx context.Context, in *ManageSensorParamRequest, opts ...grpc.CallOption) (*ManageSensorParamResponse, error) {
+func (c *radarServiceClient) SetParamSensor(ctx context.Context, in *SetParamSensorRequest, opts ...grpc.CallOption) (*SetParamSensorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ManageSensorParamResponse)
-	err := c.cc.Invoke(ctx, RadarService_ManageSensorParam_FullMethodName, in, out, cOpts...)
+	out := new(SetParamSensorResponse)
+	err := c.cc.Invoke(ctx, RadarService_SetParamSensor_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *radarServiceClient) ManageLanes(ctx context.Context, in *ManageLanesRequest, opts ...grpc.CallOption) (*ManageLanesResponse, error) {
+func (c *radarServiceClient) GetAvailableSensors(ctx context.Context, in *GetAvailableSensorsRequest, opts ...grpc.CallOption) (*GetAvailableSensorsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ManageLanesResponse)
-	err := c.cc.Invoke(ctx, RadarService_ManageLanes_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *radarServiceClient) SettingRadar(ctx context.Context, in *SettingRadarRequest, opts ...grpc.CallOption) (*SettingRadarResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SettingRadarResponse)
-	err := c.cc.Invoke(ctx, RadarService_SettingRadar_FullMethodName, in, out, cOpts...)
+	out := new(GetAvailableSensorsResponse)
+	err := c.cc.Invoke(ctx, RadarService_GetAvailableSensors_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,16 +95,14 @@ func (c *radarServiceClient) SettingRadar(ctx context.Context, in *SettingRadarR
 //
 // Сервис для взаимодействия с радаром
 type RadarServiceServer interface {
-	// Получение всех параметров радара
-	GetSensorState(context.Context, *GetSensorStateRequest) (*SensorStateResponse, error)
 	// Выставление базовых настроек радара
-	SetSensorParams(context.Context, *SetSensorParamsRequest) (*SensorStateResponse, error)
-	// Выставление/получение конкретного параметра сенсора
-	ManageSensorParam(context.Context, *ManageSensorParamRequest) (*ManageSensorParamResponse, error)
-	// Выставление параметров Lane
-	ManageLanes(context.Context, *ManageLanesRequest) (*ManageLanesResponse, error)
+	SetDefaultParamsSensor(context.Context, *SetDefaultParamsSensorRequest) (*StateSensorResponse, error)
+	// Получение всех параметров радара
+	GetStateSensor(context.Context, *GetStateSensorRequest) (*StateSensorResponse, error)
 	// Комплексная настройка радара с полосами
-	SettingRadar(context.Context, *SettingRadarRequest) (*SettingRadarResponse, error)
+	SetParamSensor(context.Context, *SetParamSensorRequest) (*SetParamSensorResponse, error)
+	// Получение списка доступных сенсоров
+	GetAvailableSensors(context.Context, *GetAvailableSensorsRequest) (*GetAvailableSensorsResponse, error)
 	mustEmbedUnimplementedRadarServiceServer()
 }
 
@@ -128,20 +113,17 @@ type RadarServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRadarServiceServer struct{}
 
-func (UnimplementedRadarServiceServer) GetSensorState(context.Context, *GetSensorStateRequest) (*SensorStateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSensorState not implemented")
+func (UnimplementedRadarServiceServer) SetDefaultParamsSensor(context.Context, *SetDefaultParamsSensorRequest) (*StateSensorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultParamsSensor not implemented")
 }
-func (UnimplementedRadarServiceServer) SetSensorParams(context.Context, *SetSensorParamsRequest) (*SensorStateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetSensorParams not implemented")
+func (UnimplementedRadarServiceServer) GetStateSensor(context.Context, *GetStateSensorRequest) (*StateSensorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStateSensor not implemented")
 }
-func (UnimplementedRadarServiceServer) ManageSensorParam(context.Context, *ManageSensorParamRequest) (*ManageSensorParamResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ManageSensorParam not implemented")
+func (UnimplementedRadarServiceServer) SetParamSensor(context.Context, *SetParamSensorRequest) (*SetParamSensorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetParamSensor not implemented")
 }
-func (UnimplementedRadarServiceServer) ManageLanes(context.Context, *ManageLanesRequest) (*ManageLanesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ManageLanes not implemented")
-}
-func (UnimplementedRadarServiceServer) SettingRadar(context.Context, *SettingRadarRequest) (*SettingRadarResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SettingRadar not implemented")
+func (UnimplementedRadarServiceServer) GetAvailableSensors(context.Context, *GetAvailableSensorsRequest) (*GetAvailableSensorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAvailableSensors not implemented")
 }
 func (UnimplementedRadarServiceServer) mustEmbedUnimplementedRadarServiceServer() {}
 func (UnimplementedRadarServiceServer) testEmbeddedByValue()                      {}
@@ -164,92 +146,74 @@ func RegisterRadarServiceServer(s grpc.ServiceRegistrar, srv RadarServiceServer)
 	s.RegisterService(&RadarService_ServiceDesc, srv)
 }
 
-func _RadarService_GetSensorState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSensorStateRequest)
+func _RadarService_SetDefaultParamsSensor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultParamsSensorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RadarServiceServer).GetSensorState(ctx, in)
+		return srv.(RadarServiceServer).SetDefaultParamsSensor(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RadarService_GetSensorState_FullMethodName,
+		FullMethod: RadarService_SetDefaultParamsSensor_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).GetSensorState(ctx, req.(*GetSensorStateRequest))
+		return srv.(RadarServiceServer).SetDefaultParamsSensor(ctx, req.(*SetDefaultParamsSensorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RadarService_SetSensorParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetSensorParamsRequest)
+func _RadarService_GetStateSensor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStateSensorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RadarServiceServer).SetSensorParams(ctx, in)
+		return srv.(RadarServiceServer).GetStateSensor(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RadarService_SetSensorParams_FullMethodName,
+		FullMethod: RadarService_GetStateSensor_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).SetSensorParams(ctx, req.(*SetSensorParamsRequest))
+		return srv.(RadarServiceServer).GetStateSensor(ctx, req.(*GetStateSensorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RadarService_ManageSensorParam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ManageSensorParamRequest)
+func _RadarService_SetParamSensor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetParamSensorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RadarServiceServer).ManageSensorParam(ctx, in)
+		return srv.(RadarServiceServer).SetParamSensor(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RadarService_ManageSensorParam_FullMethodName,
+		FullMethod: RadarService_SetParamSensor_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).ManageSensorParam(ctx, req.(*ManageSensorParamRequest))
+		return srv.(RadarServiceServer).SetParamSensor(ctx, req.(*SetParamSensorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RadarService_ManageLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ManageLanesRequest)
+func _RadarService_GetAvailableSensors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAvailableSensorsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RadarServiceServer).ManageLanes(ctx, in)
+		return srv.(RadarServiceServer).GetAvailableSensors(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RadarService_ManageLanes_FullMethodName,
+		FullMethod: RadarService_GetAvailableSensors_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).ManageLanes(ctx, req.(*ManageLanesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RadarService_SettingRadar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SettingRadarRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RadarServiceServer).SettingRadar(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RadarService_SettingRadar_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).SettingRadar(ctx, req.(*SettingRadarRequest))
+		return srv.(RadarServiceServer).GetAvailableSensors(ctx, req.(*GetAvailableSensorsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -262,24 +226,20 @@ var RadarService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RadarServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetSensorState",
-			Handler:    _RadarService_GetSensorState_Handler,
+			MethodName: "SetDefaultParamsSensor",
+			Handler:    _RadarService_SetDefaultParamsSensor_Handler,
 		},
 		{
-			MethodName: "SetSensorParams",
-			Handler:    _RadarService_SetSensorParams_Handler,
+			MethodName: "GetStateSensor",
+			Handler:    _RadarService_GetStateSensor_Handler,
 		},
 		{
-			MethodName: "ManageSensorParam",
-			Handler:    _RadarService_ManageSensorParam_Handler,
+			MethodName: "SetParamSensor",
+			Handler:    _RadarService_SetParamSensor_Handler,
 		},
 		{
-			MethodName: "ManageLanes",
-			Handler:    _RadarService_ManageLanes_Handler,
-		},
-		{
-			MethodName: "SettingRadar",
-			Handler:    _RadarService_SettingRadar_Handler,
+			MethodName: "GetAvailableSensors",
+			Handler:    _RadarService_GetAvailableSensors_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

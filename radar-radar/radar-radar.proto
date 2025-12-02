@@ -6,20 +6,23 @@ option go_package = "gl.npo-its.ru/radar/proto-radar";
 
 // Сервис для взаимодействия с радаром
 service RadarService {
-  // Получение всех параметров радара
-  rpc GetSensorState(GetSensorStateRequest) returns (SensorStateResponse);
-
   // Выставление базовых настроек радара
-  rpc SetSensorParams(SetSensorParamsRequest) returns (SensorStateResponse);
+  rpc SetDefaultParamsSensor(SetDefaultParamsSensorRequest) returns (StateSensorResponse);
 
   // Выставление/получение конкретного параметра сенсора
-  rpc ManageSensorParam(ManageSensorParamRequest) returns (ManageSensorParamResponse);
+  //rpc ManageSensorParam(ManageSensorParamRequest) returns (ManageSensorParamResponse);
 
   // Выставление параметров Lane
-  rpc ManageLanes(ManageLanesRequest) returns (ManageLanesResponse);
+  //rpc ManageLanes(ManageLanesRequest) returns (ManageLanesResponse);
+
+  // Получение всех параметров радара
+  rpc GetStateSensor(GetStateSensorRequest) returns (StateSensorResponse);
 
   // Комплексная настройка радара с полосами
-  rpc SettingRadar(SettingRadarRequest) returns (SettingRadarResponse);
+  rpc SetParamSensor(SetParamSensorRequest) returns (SetParamSensorResponse);
+
+  // Получение списка доступных сенсоров
+  rpc GetAvailableSensors(GetAvailableSensorsRequest) returns (GetAvailableSensorsResponse);
 }
 
 message RadarWithLanes {
@@ -39,6 +42,7 @@ message RadarWithLanes {
   int32 waveform_selector = 14; // 100 waveform_selector (выбор формы сигнала) Значение: 1 (65 MHz / 96 RG) По умолчанию: 0 (145 MHz / 168 RG)
   int32 tx_power_selector = 15; // 104 (уровень мощности передатчика) Значение: 1 (высокая мощность) По умолчанию: 1
   repeated SensorLane lanes = 16;
+  uint32 serial_number = 17;    // Добавленное поле: серийный номер
 }
 
 // Сообщение для SensorLane
@@ -69,35 +73,30 @@ message Point2D {
 }
 
 // Запрос на создание радара с полосами
-message SettingRadarRequest {
+message SetParamSensorRequest {
   RadarWithLanes radar = 1;
 }
 
-// Запрос на комплексную настройку радара
-//message SettingRadarRequest {
-//  string sensor_id = 1;
-//  repeated double coords = 2; // [x, y]
-//  double azimuth = 3;
-//  double angle = 4;
-//  double height = 5;
-//  repeated SensorLane lanes = 6;
-//}
-
-message SettingRadarResponse {
+message SetParamSensorResponse {
   RadarWithLanes radar = 1;
 }
 
-// Ответ на комплексную настройку радара
-//message SettingRadarResponse {
-//  string sensor_id = 1;
-//  repeated double coords = 2;
-//  double azimuth = 3;
-//  double angle = 4;
-//  double height = 5;
-//  repeated SensorLane lanes = 6;
-//  string status = 7; // "success" или "error"
-//  string message = 8; // Описание результата операции
-//}
+// Запрос на получение списка доступных сенсоров
+message GetAvailableSensorsRequest {
+  // Пустой запрос, можно добавить фильтры в будущем
+}
+
+// Ответ со списком доступных сенсоров
+message GetAvailableSensorsResponse {
+  repeated AvailableSensor sensors = 1;
+}
+
+// Информация о доступном сенсоре
+message AvailableSensor {
+  uint32 serial_number = 1; // Серийный номер сенсора
+  string ip = 2;           // IP адрес сенсора
+  int32 port = 3;          // Порт сенсора
+}
 
 // Точка в 2D пространстве
 //message Point {
@@ -106,21 +105,21 @@ message SettingRadarResponse {
 //}
 
 // Остальные сообщения остаются без изменений
-message GetSensorStateRequest {
-  string sensor_id = 1;
+message GetStateSensorRequest {
+  string serial_number = 1;
 }
 
 // Запрос на установку параметров сенсора
-message SetSensorParamsRequest {
-  string sensor_id = 1;
+message SetDefaultParamsSensorRequest {
+  string serial_number = 1;
 }
 
 // Запрос на управление параметрами сенсора
-message ManageSensorParamRequest {
-  string sensor_id = 1;
-  string mode = 2; // "r" - чтение, "rw" - чтение/запись
-  repeated ParamState state = 3;
-}
+//message ManageSensorParamRequest {
+//  string sensor_id = 1;
+//  string mode = 2; // "r" - чтение, "rw" - чтение/запись
+//  repeated ParamState state = 3;
+//}
 
 // Состояние параметра
 message ParamState {
@@ -129,17 +128,17 @@ message ParamState {
 }
 
 // Ответ на управление параметрами сенсора
-message ManageSensorParamResponse {
-  string sensor_id = 1;
-  repeated ParamState state = 2;
-}
+//message ManageSensorParamResponse {
+//  string sensor_id = 1;
+//  repeated ParamState state = 2;
+//}
 
 // Запрос на управление полосами
-message ManageLanesRequest {
-  string sensor_id = 1;
-  string mode = 2; // "r" - чтение, "rw" - чтение/запись
-  repeated LaneRequest lane = 3;
-}
+//message ManageLanesRequest {
+//  string sensor_id = 1;
+//  string mode = 2; // "r" - чтение, "rw" - чтение/запись
+//  repeated LaneRequest lane = 3;
+//}
 
 // Запрос для одной полосы
 message LaneRequest {
@@ -150,10 +149,10 @@ message LaneRequest {
 }
 
 // Ответ на управление полосами
-message ManageLanesResponse {
-  string sensor_id = 1;
-  repeated LaneResponse lane = 2;
-}
+//message ManageLanesResponse {
+//  string sensor_id = 1;
+//  repeated LaneResponse lane = 2;
+//}
 
 // Ответ для одной полосы
 message LaneResponse {
@@ -170,10 +169,10 @@ message Coordinate {
 }
 
 // Полный ответ состояния сенсора
-message SensorStateResponse {
-  string sensor_id = 1;
+message StateSensorResponse {
+  string serial_number = 1;
   ConnectionParams connection_params = 2;
-  SettingRadarResponse params = 3;
+  SetParamSensorResponse params = 3;
 }
 
 // Параметры подключения
