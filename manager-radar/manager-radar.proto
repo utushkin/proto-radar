@@ -8,12 +8,13 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 message IdRequest {
-  string id = 1; // Идентификатор радара
+  uint32 serial_number = 1; // Идентификатор радара
 }
 
 // Ответ сервиса
 message IdResponse {
   string id = 1;           // UUID созданной/удалённой сущности
+  uint32 serial_number = 2;
 }
 
 message Type {
@@ -408,7 +409,7 @@ message CreateRadarWithLanesRequest {
 
 // Запрос на обновление радара с полосами
 message UpdateRadarWithLanesRequest {
-  string id = 1;
+  uint32 serial_number = 1;
   RadarWithLanes radar = 2;
 }
 
