@@ -67,7 +67,7 @@ message UpdateRadarRequest {
 }
 
 message RecognitionsFilter {
-  repeated string sensor_ids = 1;
+  repeated uint32 serial_number = 1;
   double heading_from = 2;
   double heading_to = 3;
   double length_from = 4;
@@ -88,7 +88,7 @@ message GetTransportObjectInfoRequest {
 
 message TransportObjectInfo {
   string id = 1;
-  string sensor_id = 2;
+  uint32 serial_number = 2;
   string origin_id = 3;
   bytes coordinates = 4; // JSON-encoded координаты
   string color = 5;
@@ -97,6 +97,7 @@ message TransportObjectInfo {
   double length = 8;
   int64 date = 9;
   google.protobuf.Timestamp created_at = 10;
+  int64 number_lane = 11;
 }
 
 message GetTransportObjectInfoResponse {
