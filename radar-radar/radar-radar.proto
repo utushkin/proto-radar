@@ -51,20 +51,8 @@ message SensorLane {
   string name = 2;
   int32 direction = 3;
   repeated Point2D coords = 4;           // координаты полосы в плоской системе координат
-  repeated Point2D polygon = 5;          // координаты полосы
-  repeated Point2D arrow_points = 6;     // координаты стрелки
-  SensorControlPoints control_points = 7; // точки для рисования полосы
   float width = 8;                       // Ширина полосы
   int32 number_lane = 9;                 // Номер полосы
-}
-
-message SensorControlPoints {
-  Point2D length_start = 1;
-  Point2D length_end = 2;
-  Point2D width_start = 3;
-  Point2D width_end = 4;
-  Point2D move_control = 5;
-  Point2D curve_control = 6;
 }
 
 message Point2D {

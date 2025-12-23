@@ -266,23 +266,12 @@ message PolylineCoords {
   repeated Point points = 1;  // [[x1,y1], [x2,y2], ...]
 }
 
-message ControlPoints {
-  Point lengthStart = 1;    // [number, number]
-  Point lengthEnd = 2;      // [number, number]
-  Point widthStart = 3;     // [number, number]
-  Point widthEnd = 4;       // [number, number]
-  Point moveControl = 5;    // [number, number]
-  Point curveControl = 6;   // [number, number]
-}
-
 message Lane {
   string  id = 1; // Идентификатор полосы
   string name = 2; // Название полосы
   string direction = 3; // Название полосы
   PolylineCoords coords = 4; // координаты полосы
-  PolylineCoords arrowPoints = 5; // координаты стрелки
-  ControlPoints controlPoints = 6; // точки для рисования полосы
-  float width = 7; // Ширина полосы
+  float width = 5; // Ширина полосы
 }
 
 message LaneResponse {
