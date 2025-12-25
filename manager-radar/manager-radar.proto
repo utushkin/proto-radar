@@ -340,6 +340,7 @@ service RadarService {
   rpc DeleteLane(LaneRequest) returns (IdResponse);
   rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
 
+  rpc CreateEmptyRadarWithLanes(google.protobuf.Empty) returns (RadarWithLanesResponse);
   rpc CreateRadarWithLanes(CreateRadarWithLanesRequest) returns (RadarWithLanesResponse);
   rpc UpdateRadarWithLanes(UpdateRadarWithLanesRequest) returns (RadarWithLanesResponse);
   rpc GetRadarWithLanes(SerialRequest) returns (RadarWithLanesResponse);
