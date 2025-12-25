@@ -343,9 +343,11 @@ service RadarService {
   rpc CreateEmptyRadarWithLanes(google.protobuf.Empty) returns (RadarWithLanesResponse);
   rpc CreateRadarWithLanes(CreateRadarWithLanesRequest) returns (RadarWithLanesResponse);
   rpc UpdateRadarWithLanes(UpdateRadarWithLanesRequest) returns (RadarWithLanesResponse);
-  rpc GetRadarWithLanes(SerialRequest) returns (RadarWithLanesResponse);
+  rpc GetRadarWithLanesForSerial(SerialRequest) returns (RadarWithLanesResponse);
+  rpc GetRadarWithLanesForId(IdRequest) returns (RadarWithLanesResponse);
   rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
-  rpc DeleteRadarWithLanes(SerialRequest) returns (SerialResponse);
+  rpc DeleteRadarWithLanesForSerial(SerialRequest) returns (SerialResponse);
+  rpc DeleteRadarWithLanesForId(IdRequest) returns (SerialResponse);
 
   rpc CreateSensor(CreateSensorRequest) returns (CreateSensorResponse);
   rpc UpdateSensor(UpdateSensorRequest) returns (UpdateSensorResponse);
@@ -409,7 +411,8 @@ message CreateRadarWithLanesRequest {
 // Запрос на обновление радара с полосами
 message UpdateRadarWithLanesRequest {
   uint32 serial_number = 1;
-  RadarWithLanes radar = 2;
+  string id = 2;
+  RadarWithLanes radar = 3;
 }
 
 // Ответ с радаром с полосами

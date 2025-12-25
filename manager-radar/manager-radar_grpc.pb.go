@@ -20,40 +20,42 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RadarService_CreateRadar_FullMethodName               = "/radar.RadarService/CreateRadar"
-	RadarService_UpdateRadar_FullMethodName               = "/radar.RadarService/UpdateRadar"
-	RadarService_GetRadar_FullMethodName                  = "/radar.RadarService/GetRadar"
-	RadarService_GetAllRadars_FullMethodName              = "/radar.RadarService/GetAllRadars"
-	RadarService_DeleteRadar_FullMethodName               = "/radar.RadarService/DeleteRadar"
-	RadarService_GetTimeZones_FullMethodName              = "/radar.RadarService/GetTimeZones"
-	RadarService_GetRadarModels_FullMethodName            = "/radar.RadarService/GetRadarModels"
-	RadarService_GetDevice_FullMethodName                 = "/radar.RadarService/GetDevice"
-	RadarService_UpdateDevice_FullMethodName              = "/radar.RadarService/UpdateDevice"
-	RadarService_GetTransportObjectInfo_FullMethodName    = "/radar.RadarService/GetTransportObjectInfo"
-	RadarService_GetExportsTypes_FullMethodName           = "/radar.RadarService/GetExportsTypes"
-	RadarService_GetExportStatuses_FullMethodName         = "/radar.RadarService/GetExportStatuses"
-	RadarService_CreateExport_FullMethodName              = "/radar.RadarService/CreateExport"
-	RadarService_UpdateExport_FullMethodName              = "/radar.RadarService/UpdateExport"
-	RadarService_GetExport_FullMethodName                 = "/radar.RadarService/GetExport"
-	RadarService_GetAllExports_FullMethodName             = "/radar.RadarService/GetAllExports"
-	RadarService_DeleteExport_FullMethodName              = "/radar.RadarService/DeleteExport"
-	RadarService_ChangeExportState_FullMethodName         = "/radar.RadarService/ChangeExportState"
-	RadarService_GetExportEvents_FullMethodName           = "/radar.RadarService/GetExportEvents"
-	RadarService_CreateLane_FullMethodName                = "/radar.RadarService/CreateLane"
-	RadarService_UpdateLane_FullMethodName                = "/radar.RadarService/UpdateLane"
-	RadarService_GetLane_FullMethodName                   = "/radar.RadarService/GetLane"
-	RadarService_GetAllLanes_FullMethodName               = "/radar.RadarService/GetAllLanes"
-	RadarService_DeleteLane_FullMethodName                = "/radar.RadarService/DeleteLane"
-	RadarService_GetDirectionTypes_FullMethodName         = "/radar.RadarService/GetDirectionTypes"
-	RadarService_CreateEmptyRadarWithLanes_FullMethodName = "/radar.RadarService/CreateEmptyRadarWithLanes"
-	RadarService_CreateRadarWithLanes_FullMethodName      = "/radar.RadarService/CreateRadarWithLanes"
-	RadarService_UpdateRadarWithLanes_FullMethodName      = "/radar.RadarService/UpdateRadarWithLanes"
-	RadarService_GetRadarWithLanes_FullMethodName         = "/radar.RadarService/GetRadarWithLanes"
-	RadarService_GetAllRadarsWithLanes_FullMethodName     = "/radar.RadarService/GetAllRadarsWithLanes"
-	RadarService_DeleteRadarWithLanes_FullMethodName      = "/radar.RadarService/DeleteRadarWithLanes"
-	RadarService_CreateSensor_FullMethodName              = "/radar.RadarService/CreateSensor"
-	RadarService_UpdateSensor_FullMethodName              = "/radar.RadarService/UpdateSensor"
-	RadarService_GetAllSensor_FullMethodName              = "/radar.RadarService/GetAllSensor"
+	RadarService_CreateRadar_FullMethodName                   = "/radar.RadarService/CreateRadar"
+	RadarService_UpdateRadar_FullMethodName                   = "/radar.RadarService/UpdateRadar"
+	RadarService_GetRadar_FullMethodName                      = "/radar.RadarService/GetRadar"
+	RadarService_GetAllRadars_FullMethodName                  = "/radar.RadarService/GetAllRadars"
+	RadarService_DeleteRadar_FullMethodName                   = "/radar.RadarService/DeleteRadar"
+	RadarService_GetTimeZones_FullMethodName                  = "/radar.RadarService/GetTimeZones"
+	RadarService_GetRadarModels_FullMethodName                = "/radar.RadarService/GetRadarModels"
+	RadarService_GetDevice_FullMethodName                     = "/radar.RadarService/GetDevice"
+	RadarService_UpdateDevice_FullMethodName                  = "/radar.RadarService/UpdateDevice"
+	RadarService_GetTransportObjectInfo_FullMethodName        = "/radar.RadarService/GetTransportObjectInfo"
+	RadarService_GetExportsTypes_FullMethodName               = "/radar.RadarService/GetExportsTypes"
+	RadarService_GetExportStatuses_FullMethodName             = "/radar.RadarService/GetExportStatuses"
+	RadarService_CreateExport_FullMethodName                  = "/radar.RadarService/CreateExport"
+	RadarService_UpdateExport_FullMethodName                  = "/radar.RadarService/UpdateExport"
+	RadarService_GetExport_FullMethodName                     = "/radar.RadarService/GetExport"
+	RadarService_GetAllExports_FullMethodName                 = "/radar.RadarService/GetAllExports"
+	RadarService_DeleteExport_FullMethodName                  = "/radar.RadarService/DeleteExport"
+	RadarService_ChangeExportState_FullMethodName             = "/radar.RadarService/ChangeExportState"
+	RadarService_GetExportEvents_FullMethodName               = "/radar.RadarService/GetExportEvents"
+	RadarService_CreateLane_FullMethodName                    = "/radar.RadarService/CreateLane"
+	RadarService_UpdateLane_FullMethodName                    = "/radar.RadarService/UpdateLane"
+	RadarService_GetLane_FullMethodName                       = "/radar.RadarService/GetLane"
+	RadarService_GetAllLanes_FullMethodName                   = "/radar.RadarService/GetAllLanes"
+	RadarService_DeleteLane_FullMethodName                    = "/radar.RadarService/DeleteLane"
+	RadarService_GetDirectionTypes_FullMethodName             = "/radar.RadarService/GetDirectionTypes"
+	RadarService_CreateEmptyRadarWithLanes_FullMethodName     = "/radar.RadarService/CreateEmptyRadarWithLanes"
+	RadarService_CreateRadarWithLanes_FullMethodName          = "/radar.RadarService/CreateRadarWithLanes"
+	RadarService_UpdateRadarWithLanes_FullMethodName          = "/radar.RadarService/UpdateRadarWithLanes"
+	RadarService_GetRadarWithLanesForSerial_FullMethodName    = "/radar.RadarService/GetRadarWithLanesForSerial"
+	RadarService_GetRadarWithLanesForId_FullMethodName        = "/radar.RadarService/GetRadarWithLanesForId"
+	RadarService_GetAllRadarsWithLanes_FullMethodName         = "/radar.RadarService/GetAllRadarsWithLanes"
+	RadarService_DeleteRadarWithLanesForSerial_FullMethodName = "/radar.RadarService/DeleteRadarWithLanesForSerial"
+	RadarService_DeleteRadarWithLanesForId_FullMethodName     = "/radar.RadarService/DeleteRadarWithLanesForId"
+	RadarService_CreateSensor_FullMethodName                  = "/radar.RadarService/CreateSensor"
+	RadarService_UpdateSensor_FullMethodName                  = "/radar.RadarService/UpdateSensor"
+	RadarService_GetAllSensor_FullMethodName                  = "/radar.RadarService/GetAllSensor"
 )
 
 // RadarServiceClient is the client API for RadarService service.
@@ -88,9 +90,11 @@ type RadarServiceClient interface {
 	CreateEmptyRadarWithLanes(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
 	CreateRadarWithLanes(ctx context.Context, in *CreateRadarWithLanesRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
 	UpdateRadarWithLanes(ctx context.Context, in *UpdateRadarWithLanesRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
-	GetRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
+	GetRadarWithLanesForSerial(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
+	GetRadarWithLanesForId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error)
 	GetAllRadarsWithLanes(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RadarsWithLanesResponse, error)
-	DeleteRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error)
+	DeleteRadarWithLanesForSerial(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error)
+	DeleteRadarWithLanesForId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*SerialResponse, error)
 	CreateSensor(ctx context.Context, in *CreateSensorRequest, opts ...grpc.CallOption) (*CreateSensorResponse, error)
 	UpdateSensor(ctx context.Context, in *UpdateSensorRequest, opts ...grpc.CallOption) (*UpdateSensorResponse, error)
 	GetAllSensor(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetAllSensorResponse, error)
@@ -384,10 +388,20 @@ func (c *radarServiceClient) UpdateRadarWithLanes(ctx context.Context, in *Updat
 	return out, nil
 }
 
-func (c *radarServiceClient) GetRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error) {
+func (c *radarServiceClient) GetRadarWithLanesForSerial(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RadarWithLanesResponse)
-	err := c.cc.Invoke(ctx, RadarService_GetRadarWithLanes_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RadarService_GetRadarWithLanesForSerial_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) GetRadarWithLanesForId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*RadarWithLanesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RadarWithLanesResponse)
+	err := c.cc.Invoke(ctx, RadarService_GetRadarWithLanesForId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -404,10 +418,20 @@ func (c *radarServiceClient) GetAllRadarsWithLanes(ctx context.Context, in *empt
 	return out, nil
 }
 
-func (c *radarServiceClient) DeleteRadarWithLanes(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error) {
+func (c *radarServiceClient) DeleteRadarWithLanesForSerial(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SerialResponse)
-	err := c.cc.Invoke(ctx, RadarService_DeleteRadarWithLanes_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RadarService_DeleteRadarWithLanesForSerial_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) DeleteRadarWithLanesForId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*SerialResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SerialResponse)
+	err := c.cc.Invoke(ctx, RadarService_DeleteRadarWithLanesForId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -476,9 +500,11 @@ type RadarServiceServer interface {
 	CreateEmptyRadarWithLanes(context.Context, *empty.Empty) (*RadarWithLanesResponse, error)
 	CreateRadarWithLanes(context.Context, *CreateRadarWithLanesRequest) (*RadarWithLanesResponse, error)
 	UpdateRadarWithLanes(context.Context, *UpdateRadarWithLanesRequest) (*RadarWithLanesResponse, error)
-	GetRadarWithLanes(context.Context, *SerialRequest) (*RadarWithLanesResponse, error)
+	GetRadarWithLanesForSerial(context.Context, *SerialRequest) (*RadarWithLanesResponse, error)
+	GetRadarWithLanesForId(context.Context, *IdRequest) (*RadarWithLanesResponse, error)
 	GetAllRadarsWithLanes(context.Context, *empty.Empty) (*RadarsWithLanesResponse, error)
-	DeleteRadarWithLanes(context.Context, *SerialRequest) (*SerialResponse, error)
+	DeleteRadarWithLanesForSerial(context.Context, *SerialRequest) (*SerialResponse, error)
+	DeleteRadarWithLanesForId(context.Context, *IdRequest) (*SerialResponse, error)
 	CreateSensor(context.Context, *CreateSensorRequest) (*CreateSensorResponse, error)
 	UpdateSensor(context.Context, *UpdateSensorRequest) (*UpdateSensorResponse, error)
 	GetAllSensor(context.Context, *empty.Empty) (*GetAllSensorResponse, error)
@@ -576,14 +602,20 @@ func (UnimplementedRadarServiceServer) CreateRadarWithLanes(context.Context, *Cr
 func (UnimplementedRadarServiceServer) UpdateRadarWithLanes(context.Context, *UpdateRadarWithLanesRequest) (*RadarWithLanesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRadarWithLanes not implemented")
 }
-func (UnimplementedRadarServiceServer) GetRadarWithLanes(context.Context, *SerialRequest) (*RadarWithLanesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRadarWithLanes not implemented")
+func (UnimplementedRadarServiceServer) GetRadarWithLanesForSerial(context.Context, *SerialRequest) (*RadarWithLanesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRadarWithLanesForSerial not implemented")
+}
+func (UnimplementedRadarServiceServer) GetRadarWithLanesForId(context.Context, *IdRequest) (*RadarWithLanesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRadarWithLanesForId not implemented")
 }
 func (UnimplementedRadarServiceServer) GetAllRadarsWithLanes(context.Context, *empty.Empty) (*RadarsWithLanesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllRadarsWithLanes not implemented")
 }
-func (UnimplementedRadarServiceServer) DeleteRadarWithLanes(context.Context, *SerialRequest) (*SerialResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteRadarWithLanes not implemented")
+func (UnimplementedRadarServiceServer) DeleteRadarWithLanesForSerial(context.Context, *SerialRequest) (*SerialResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRadarWithLanesForSerial not implemented")
+}
+func (UnimplementedRadarServiceServer) DeleteRadarWithLanesForId(context.Context, *IdRequest) (*SerialResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRadarWithLanesForId not implemented")
 }
 func (UnimplementedRadarServiceServer) CreateSensor(context.Context, *CreateSensorRequest) (*CreateSensorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSensor not implemented")
@@ -1119,20 +1151,38 @@ func _RadarService_UpdateRadarWithLanes_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RadarService_GetRadarWithLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RadarService_GetRadarWithLanesForSerial_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SerialRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RadarServiceServer).GetRadarWithLanes(ctx, in)
+		return srv.(RadarServiceServer).GetRadarWithLanesForSerial(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RadarService_GetRadarWithLanes_FullMethodName,
+		FullMethod: RadarService_GetRadarWithLanesForSerial_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).GetRadarWithLanes(ctx, req.(*SerialRequest))
+		return srv.(RadarServiceServer).GetRadarWithLanesForSerial(ctx, req.(*SerialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RadarService_GetRadarWithLanesForId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).GetRadarWithLanesForId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_GetRadarWithLanesForId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).GetRadarWithLanesForId(ctx, req.(*IdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1155,20 +1205,38 @@ func _RadarService_GetAllRadarsWithLanes_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RadarService_DeleteRadarWithLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RadarService_DeleteRadarWithLanesForSerial_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SerialRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RadarServiceServer).DeleteRadarWithLanes(ctx, in)
+		return srv.(RadarServiceServer).DeleteRadarWithLanesForSerial(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RadarService_DeleteRadarWithLanes_FullMethodName,
+		FullMethod: RadarService_DeleteRadarWithLanesForSerial_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).DeleteRadarWithLanes(ctx, req.(*SerialRequest))
+		return srv.(RadarServiceServer).DeleteRadarWithLanesForSerial(ctx, req.(*SerialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RadarService_DeleteRadarWithLanesForId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).DeleteRadarWithLanesForId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_DeleteRadarWithLanesForId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).DeleteRadarWithLanesForId(ctx, req.(*IdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1347,16 +1415,24 @@ var RadarService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RadarService_UpdateRadarWithLanes_Handler,
 		},
 		{
-			MethodName: "GetRadarWithLanes",
-			Handler:    _RadarService_GetRadarWithLanes_Handler,
+			MethodName: "GetRadarWithLanesForSerial",
+			Handler:    _RadarService_GetRadarWithLanesForSerial_Handler,
+		},
+		{
+			MethodName: "GetRadarWithLanesForId",
+			Handler:    _RadarService_GetRadarWithLanesForId_Handler,
 		},
 		{
 			MethodName: "GetAllRadarsWithLanes",
 			Handler:    _RadarService_GetAllRadarsWithLanes_Handler,
 		},
 		{
-			MethodName: "DeleteRadarWithLanes",
-			Handler:    _RadarService_DeleteRadarWithLanes_Handler,
+			MethodName: "DeleteRadarWithLanesForSerial",
+			Handler:    _RadarService_DeleteRadarWithLanesForSerial_Handler,
+		},
+		{
+			MethodName: "DeleteRadarWithLanesForId",
+			Handler:    _RadarService_DeleteRadarWithLanesForId_Handler,
 		},
 		{
 			MethodName: "CreateSensor",
