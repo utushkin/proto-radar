@@ -7,7 +7,76 @@ option go_package = "gl.npo-its.ru/radar/proto-radar";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
+service RadarService {
+  // Методы для работы с радарами
+  rpc CreateRadar(CreateRadarRequest) returns (RadarResponse);
+  rpc UpdateRadar(UpdateRadarRequest) returns (RadarResponse);
+  rpc GetRadar(IdRequest) returns (RadarResponse);
+  rpc GetAllRadars(google.protobuf.Empty) returns (RadarsResponse);
+  rpc DeleteRadar(IdRequest) returns (RadarResponse);
+
+  // Методы для работы с радарами и полосами
+  rpc CreateEmptyRadarWithLanes(google.protobuf.Empty) returns (RadarWithLanesResponse);
+  rpc CreateRadarWithLanes(CreateRadarWithLanesRequest) returns (RadarWithLanesResponse);
+  rpc UpdateRadarWithLanes(UpdateRadarWithLanesRequest) returns (RadarWithLanesResponse);
+  rpc GetRadarWithLanesForSerial(SerialRequest) returns (RadarWithLanesResponse);
+  rpc GetRadarWithLanesForId(IdRequest) returns (RadarWithLanesResponse);
+  rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
+  rpc DeleteRadarWithLanesForSerial(SerialRequest) returns (SerialResponse);
+  rpc DeleteRadarWithLanesForId(IdRequest) returns (SerialResponse);
+
+  // Методы для справочников
+  rpc GetTimeZones(google.protobuf.Empty) returns (TimeZonesResponse);
+  rpc GetRadarModels(google.protobuf.Empty) returns (RadarModelsResponse);
+  rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
+
+  // Методы для работы с устройством (Пуид)
+  rpc GetDevice(google.protobuf.Empty) returns (DeviceResponse);
+  rpc UpdateDevice(UpdateDeviceRequest) returns (DeviceResponse);
+
+  // Методы для работы с транспортными объектами
+  rpc GetTransportObjectInfo(GetTransportObjectInfoRequest) returns (GetTransportObjectInfoResponse);
+
+  // Методы для работы с экспортами
+  rpc GetExportsTypes(google.protobuf.Empty) returns (GetExportTypesResponse);
+  rpc GetExportStatuses(google.protobuf.Empty) returns (GetExportStatusesResponse);
+  rpc CreateExport(CreateExportRequest) returns (ExportResponse);
+  rpc UpdateExport(UpdateExportRequest) returns (ExportResponse);
+  rpc GetExport(IdRequest) returns (ExportResponse);
+  rpc GetAllExports(google.protobuf.Empty) returns (ExportsResponse);
+  rpc DeleteExport(IdRequest) returns (ExportIdResponse);
+  rpc ChangeExportState(ChangeExportStateRequest) returns (ChangeExportStateResponse);
+  rpc GetExportEvents(GetExportsEventsRequest) returns (GetExportsEventsResponse);
+
+  // Методы для работы с полосами
+  rpc CreateLane(CreateLaneRequest) returns (LaneResponse);
+  rpc UpdateLane(UpdateLaneRequest) returns (LaneResponse);
+  rpc GetLane(LaneRequest) returns (LaneResponse);
+  rpc GetAllLanes(LanesRequest) returns (LanesResponse);
+  rpc DeleteLane(LaneRequest) returns (IdResponse);
+
+  // Методы для работы с сенсорами
+  rpc CreateSensor(CreateSensorRequest) returns (CreateSensorResponse);
+  rpc UpdateSensor(UpdateSensorRequest) returns (UpdateSensorResponse);
+  rpc GetAllSensor(google.protobuf.Empty) returns (GetAllSensorResponse);
+
+  // Методы для работы с фиксационными линиями (рубежами)
+  rpc CreateFixationLine(CreateFixationLineRequest) returns (FixationLineResponse);
+  rpc UpdateFixationLine(UpdateFixationLineRequest) returns (FixationLineResponse);
+  rpc GetFixationLinesForLane(GetFixationLineRequest) returns (FixationLinesForLaneResponse);
+  rpc GetFixationLinesForRadar(GetAllFixationLinesRequest) returns (FixationLinesResponse);
+  rpc DeleteFixationLine(GetDeleteFixationLineRequest) returns (DeleteFixationLineResponse);
+}
+
+// ==============================
+// Общие сообщения
+// ==============================
+
 message IdRequest {
+  string id = 1;
+}
+
+message IdResponse {
   string id = 1;
 }
 
@@ -15,13 +84,8 @@ message SerialRequest {
   uint32 serial_number = 1;
 }
 
-// Ответ сервиса
-message IdResponse {
-  string id = 1;           // UUID созданной/удалённой сущности
-}
-
 message SerialResponse {
-  string id = 1;           // UUID созданной/удалённой сущности
+  string id = 1;
   uint32 serial_number = 2;
 }
 
@@ -30,41 +94,110 @@ message Type {
   string full_name = 2;
 }
 
-// Структура радара
+message Point2D {
+  double x = 1;
+  double y = 2;
+}
+
+message Point {
+  repeated double coords = 1;  // Всегда ровно 2 элемента: [x, y]
+}
+
+message PolylineCoords {
+  repeated Point points = 1;  // [[x1,y1], [x2,y2], ...]
+}
+
+// ==============================
+// Сообщения для радаров
+// ==============================
+
 message Radar {
-  string  id = 1; // Идентификатор радара
-  string name = 2; // Название радара
+  string id = 1;
+  string name = 2;
   double lat = 3;
   double lon = 4;
-  float azimuth = 5; // Азимут
-  float angle = 6; // Угол наклона
-  float height = 7; // Высота
-  optional string direction = 8; // Направление
-  string address = 9; // Адрес
-  string ip = 10; // IP-адрес
-  string serial = 11; // Серийный номер
-  string model = 12; // Модель радара
+  float azimuth = 5;
+  float angle = 6;
+  float height = 7;
+  optional string direction = 8;
+  string address = 9;
+  string ip = 10;
+  string serial = 11;
+  string model = 12;
 }
 
-// Ответ сервиса
-message RadarResponse {
-  Radar radar = 1; // Ответ с радаром (при создании или обновлении)
-}
-// Ответ сервиса
-message RadarsResponse {
-  repeated Radar radars = 1; // Ответ с массивом радаров (при получении всех)
-}
-
-// Запрос на создание радара
 message CreateRadarRequest {
-  Radar radar = 1; // Радар для создания
+  Radar radar = 1;
 }
 
-// Запрос на обновление радара
 message UpdateRadarRequest {
-  string id = 1; // Идентификатор радара
-  Radar radar = 2; // Обновленные данные радара
+  string id = 1;
+  Radar radar = 2;
 }
+
+message RadarResponse {
+  Radar radar = 1;
+}
+
+message RadarsResponse {
+  repeated Radar radars = 1;
+}
+
+// ==============================
+// Сообщения для справочников
+// ==============================
+
+message TimeZone {
+  string id = 1;
+  string full_name = 2;
+  string time_zone = 3;
+}
+
+message TimeZonesResponse {
+  repeated TimeZone time_zones = 1;
+}
+
+message RadarModel {
+  string id = 1;
+  string alias = 2;
+  string model_name = 3;
+  string manufacturer = 4;
+}
+
+message RadarModelsResponse {
+  repeated RadarModel models = 1;
+}
+
+message GetDirectionTypesResponse {
+  repeated Type types = 1;
+}
+
+// ==============================
+// Сообщения для устройства (Пуид)
+// ==============================
+
+message Device {
+  string id = 1;
+  string name = 2;
+  string address = 3;
+  double lat = 4;
+  double lon = 5;
+  string serial = 6;
+  google.protobuf.Timestamp production_date = 7;
+  optional string note = 8;
+}
+
+message DeviceResponse {
+  Device device = 1;
+}
+
+message UpdateDeviceRequest {
+  Device device = 1;
+}
+
+// ==============================
+// Сообщения для транспортных объектов
+// ==============================
 
 message RecognitionsFilter {
   repeated uint32 serial_number = 1;
@@ -74,15 +207,15 @@ message RecognitionsFilter {
   double length_to = 5;
   double speed_from = 6;
   double speed_to = 7;
-  int64  date_from = 8;
-  int64  date_to = 9;
+  int64 date_from = 8;
+  int64 date_to = 9;
   string sorting = 10;        // "asc" or "desc"
   string sorting_column = 11;
 }
 
 message GetTransportObjectInfoRequest {
-  int64 page = 1; // номер страницы
-  int64 pageSize = 2; // кол-во объектов на странице
+  int64 page = 1;
+  int64 pageSize = 2;
   RecognitionsFilter filter = 3;
 }
 
@@ -90,7 +223,7 @@ message TransportObjectInfo {
   string id = 1;
   uint32 serial_number = 2;
   string origin_id = 3;
-  bytes coordinates = 4; // JSON-encoded координаты
+  bytes coordinates = 4;  // JSON-encoded координаты
   string color = 5;
   double speed = 6;
   double heading = 7;
@@ -107,48 +240,9 @@ message GetTransportObjectInfoResponse {
   int64 total_items = 4;
 }
 
-// Ответ с временными зонами
-message TimeZonesResponse {
-  repeated TimeZone time_zones = 1; // Список временных зон
-}
-
-message TimeZone {
-  string id = 1;
-  string full_name = 2;
-  string time_zone = 3;
-}
-
-// Ответ с моделями радара
-message RadarModelsResponse {
-  repeated RadarModel models = 1; // Список моделей радара
-}
-
-// Структура модели радара
-message RadarModel {
-  string id = 1;       // Идентификатор модели
-  string alias = 2;    // Алиас модели
-  string model_name = 3; // Название модели
-  string manufacturer = 4; // Производитель модели
-}
-
-message Device {
-  string id = 1; // Идентификатор Пуида
-  string name = 2; // Название Пуида
-  string address = 3; // Адрес
-  double lat = 4;  // Широта
-  double lon = 5; // Долгота
-  string serial = 6; // Серийный номер
-  google.protobuf.Timestamp production_date = 7; // Дата производства
-  optional string note = 8; // Примечание
-}
-
-message DeviceResponse {
-  Device device = 1;
-}
-
-message UpdateDeviceRequest {
-  Device device = 1;
-}
+// ==============================
+// Сообщения для экспортов
+// ==============================
 
 message ExportTypeParam {
   string field = 1;
@@ -168,9 +262,8 @@ message GetExportStatusesResponse {
   repeated Type statuses = 1;
 }
 
-// Структура экспорта
 message Export {
-  string  id = 1;
+  string id = 1;
   string name = 2;
   string export_type = 3 [json_name = "exportType"];
   int32 interval = 4;
@@ -185,7 +278,7 @@ message Export {
 }
 
 message ListExport {
-  string  id = 1;
+  string id = 1;
   string name = 2;
   string export_type = 3;
   string host = 4;
@@ -194,8 +287,8 @@ message ListExport {
 }
 
 message ExportEvent {
-  string  id = 1;
-  string  export_id = 2;
+  string id = 1;
+  string export_id = 2;
   int64 date = 3;
   string name = 4;
   int64 export_start_date = 5;
@@ -206,16 +299,15 @@ message ExportEvent {
 message ExportsEventsFilter {
   repeated string export_ids = 1;
   repeated string statuses = 2;
-  int64  export_start_date_from = 3;
-  int64  export_start_date_to = 4;
+  int64 export_start_date_from = 3;
+  int64 export_start_date_to = 4;
 }
 
 message GetExportsEventsRequest {
-  int64 page = 1; // номер страницы
-  int64 pageSize = 2; // кол-во объектов на странице
+  int64 page = 1;
+  int64 pageSize = 2;
   ExportsEventsFilter filter = 3;
 }
-
 
 message GetExportsEventsResponse {
   repeated ExportEvent exportsEvents = 1;
@@ -223,7 +315,6 @@ message GetExportsEventsResponse {
   int64 page_size = 3;
   int64 total_items = 4;
 }
-
 
 message ExportResponse {
   Export export = 1;
@@ -237,16 +328,13 @@ message ExportsResponse {
   repeated ListExport exports = 1;
 }
 
-
 message CreateExportRequest {
   Export export = 1;
 }
 
-
 message UpdateExportRequest {
   Export export = 1;
 }
-
 
 message ChangeExportStateRequest {
   string id = 1;
@@ -258,35 +346,25 @@ message ChangeExportStateResponse {
   bool export_on = 2;
 }
 
-message Point {
-  repeated double coords = 1;  // Всегда ровно 2 элемента: [x, y]
-}
-
-message PolylineCoords {
-  repeated Point points = 1;  // [[x1,y1], [x2,y2], ...]
-}
+// ==============================
+// Сообщения для полос
+// ==============================
 
 message Lane {
-  string  id = 1; // Идентификатор полосы
-  string name = 2; // Название полосы
-  string direction = 3; // Название полосы
-  PolylineCoords coords = 4; // координаты полосы
-  float width = 5; // Ширина полосы
+  string id = 1;
+  string name = 2;
+  string direction = 3;
+  PolylineCoords coords = 4;
+  float width = 5;
 }
 
 message LaneResponse {
   Lane lane = 1;
 }
 
-
 message LanesResponse {
   repeated Lane lanes = 1;
 }
-
-message GetDirectionTypesResponse {
-  repeated Type types = 1;
-}
-
 
 message LaneRequest {
   string id = 1;
@@ -307,59 +385,10 @@ message UpdateLaneRequest {
   Lane lane = 2;
 }
 
-service RadarService {
-  rpc CreateRadar(CreateRadarRequest) returns (RadarResponse);
-  rpc UpdateRadar(UpdateRadarRequest) returns (RadarResponse);
-  rpc GetRadar(IdRequest) returns (RadarResponse);
-  rpc GetAllRadars(google.protobuf.Empty) returns (RadarsResponse);
-  rpc DeleteRadar(IdRequest) returns (RadarResponse);
+// ==============================
+// Сообщения для радаров с полосами
+// ==============================
 
-  rpc GetTimeZones(google.protobuf.Empty) returns (TimeZonesResponse);
-  rpc GetRadarModels(google.protobuf.Empty) returns (RadarModelsResponse);
-
-  rpc GetDevice(google.protobuf.Empty) returns (DeviceResponse);
-  rpc UpdateDevice(UpdateDeviceRequest) returns (DeviceResponse);
-
-  rpc GetTransportObjectInfo(GetTransportObjectInfoRequest) returns (GetTransportObjectInfoResponse);
-
-  rpc GetExportsTypes(google.protobuf.Empty) returns (GetExportTypesResponse);
-  rpc GetExportStatuses(google.protobuf.Empty) returns (GetExportStatusesResponse);
-
-  rpc CreateExport(CreateExportRequest) returns (ExportResponse);
-  rpc UpdateExport(UpdateExportRequest) returns (ExportResponse);
-  rpc GetExport(IdRequest) returns (ExportResponse);
-  rpc GetAllExports(google.protobuf.Empty) returns (ExportsResponse);
-  rpc DeleteExport(IdRequest) returns (ExportIdResponse);
-  rpc ChangeExportState(ChangeExportStateRequest) returns (ChangeExportStateResponse);
-  rpc GetExportEvents(GetExportsEventsRequest) returns (GetExportsEventsResponse);
-
-  rpc CreateLane(CreateLaneRequest) returns (LaneResponse);
-  rpc UpdateLane(UpdateLaneRequest) returns (LaneResponse);
-  rpc GetLane(LaneRequest) returns (LaneResponse);
-  rpc GetAllLanes(LanesRequest) returns (LanesResponse);
-  rpc DeleteLane(LaneRequest) returns (IdResponse);
-  rpc GetDirectionTypes(google.protobuf.Empty) returns (GetDirectionTypesResponse);
-
-  rpc CreateEmptyRadarWithLanes(google.protobuf.Empty) returns (RadarWithLanesResponse);
-  rpc CreateRadarWithLanes(CreateRadarWithLanesRequest) returns (RadarWithLanesResponse);
-  rpc UpdateRadarWithLanes(UpdateRadarWithLanesRequest) returns (RadarWithLanesResponse);
-  rpc GetRadarWithLanesForSerial(SerialRequest) returns (RadarWithLanesResponse);
-  rpc GetRadarWithLanesForId(IdRequest) returns (RadarWithLanesResponse);
-  rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
-  rpc DeleteRadarWithLanesForSerial(SerialRequest) returns (SerialResponse);
-  rpc DeleteRadarWithLanesForId(IdRequest) returns (SerialResponse);
-
-  rpc CreateSensor(CreateSensorRequest) returns (CreateSensorResponse);
-  rpc UpdateSensor(UpdateSensorRequest) returns (UpdateSensorResponse);
-  rpc GetAllSensor(google.protobuf.Empty) returns (GetAllSensorResponse);
-}
-
-message Point2D {
-  double x = 1;
-  double y = 2;
-}
-
-// Сообщение для ControlPoints
 message SensorControlPoints {
   Point2D length_start = 1;
   Point2D length_end = 2;
@@ -369,20 +398,19 @@ message SensorControlPoints {
   Point2D curve_control = 6;
 }
 
-// Сообщение для SensorLane
 message SensorLane {
   string id = 1;
   string name = 2;
   int32 direction = 3;
-  repeated Point2D coords = 4;           // координаты полосы в плоской системе координат
-  repeated Point2D polygon = 5;          // координаты полосы
-  repeated Point2D arrow_points = 6;     // координаты стрелки
-  SensorControlPoints control_points = 7; // точки для рисования полосы
-  float width = 8;                       // Ширина полосы
-  int32 number_lane = 9;                 // Номер полосы
+  repeated Point2D coords = 4;
+  repeated Point2D polygon = 5;
+  repeated Point2D arrow_points = 6;
+  SensorControlPoints control_points = 7;
+  float width = 8;
+  int32 number_lane = 9;
+  repeated FixationLine fixation_lines = 10;
 }
 
-// Сообщение для RadarWithLanes
 message RadarWithLanes {
   string id = 1;
   string name = 2;
@@ -397,48 +425,52 @@ message RadarWithLanes {
   string ip = 11;
   string serial = 12;
   string model = 13;
-  int32 waveform_selector = 14; // 100 waveform_selector (выбор формы сигнала) Значение: 1 (65 MHz / 96 RG) По умолчанию: 0 (145 MHz / 168 RG)
-  int32 tx_power_selector = 15; // 104 (уровень мощности передатчика) Значение: 1 (высокая мощность) По умолчанию: 1
+  int32 waveform_selector = 14;  // 100 waveform_selector (выбор формы сигнала)
+  int32 tx_power_selector = 15;  // 104 (уровень мощности передатчика)
   repeated SensorLane lanes = 16;
   uint32 serial_number = 17;
 }
 
-// Запрос на создание радара с полосами
 message CreateRadarWithLanesRequest {
   RadarWithLanes radar = 1;
 }
 
-// Запрос на обновление радара с полосами
 message UpdateRadarWithLanesRequest {
   uint32 serial_number = 1;
   string id = 2;
   RadarWithLanes radar = 3;
 }
 
-// Ответ с радаром с полосами
 message RadarWithLanesResponse {
   RadarWithLanes radar = 1;
 }
 
-// Ответ с массивом радаров с полосами
 message RadarsWithLanesResponse {
   repeated RadarWithLanes radars = 1;
+}
+
+// ==============================
+// Сообщения для сенсоров
+// ==============================
+
+message Sensor {
+  string id = 1;
+  uint32 serial_number = 2;
+  string ip = 3;
+  int32 port = 4;
 }
 
 message CreateSensorRequest {
   Sensor sensor = 1;
 }
 
-
 message CreateSensorResponse {
   Sensor sensor = 1;
 }
 
-
 message UpdateSensorRequest {
   Sensor sensor = 1;
 }
-
 
 message UpdateSensorResponse {
   Sensor sensor = 1;
@@ -448,10 +480,68 @@ message GetAllSensorResponse {
   repeated Sensor sensors = 1;
 }
 
-// Сообщение для RadarWithLanes
-message Sensor {
+// ==============================
+// Сообщения для фиксационных линий
+// ==============================
+
+message FixationLine {
   string id = 1;
-  uint32 serial_number = 2; // Серийный номер сенсора
-  string ip = 3;           // IP адрес сенсора
-  int32 port = 4;          // Порт сенсора
+  string radar_id = 2;
+  string lane_id = 3;
+  double p1_x = 4;
+  double p1_y = 5;
+  double p2_x = 6;
+  double p2_y = 7;
+  bool is_deleted = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message GetDeleteFixationLineRequest {
+  string radar_id = 1;
+  string lane_id = 2;
+}
+
+message GetFixationLineRequest {
+  string radar_id = 1;
+  string lane_id = 2;
+}
+
+message GetAllFixationLinesRequest {
+  string radar_id = 1;
+}
+
+message FixationLinesResponse {
+  repeated FixationLine fixation_lines = 1;
+}
+
+message FixationLinesForLaneResponse {
+  repeated FixationLine fixation_lines = 1;
+}
+
+message DeleteFixationLineResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message FixationLineResponse {
+  FixationLine fixation_line = 1;
+}
+
+message CreateFixationLineRequest {
+  string radar_id = 1;
+  string lane_id = 2;
+  double p1_x = 3;
+  double p1_y = 4;
+  double p2_x = 5;
+  double p2_y = 6;
+}
+
+message UpdateFixationLineRequest {
+  string radar_id = 1;
+  string lane_id = 2;
+  double p1_x = 3;
+  double p1_y = 4;
+  double p2_x = 5;
+  double p2_y = 6;
 }
