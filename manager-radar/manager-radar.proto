@@ -65,7 +65,8 @@ service RadarService {
   rpc UpdateFixationLine(UpdateFixationLineRequest) returns (FixationLineResponse);
   rpc GetFixationLinesForLane(GetFixationLineRequest) returns (FixationLinesForLaneResponse);
   rpc GetFixationLinesForRadar(GetAllFixationLinesRequest) returns (FixationLinesResponse);
-  rpc DeleteFixationLine(GetDeleteFixationLineRequest) returns (DeleteFixationLineResponse);
+  rpc DeleteFixationLine(DeleteFixationLineRequest) returns (DeleteFixationLineResponse);
+  rpc DeleteFixationLineForId(DeleteFixationLineForIdRequest) returns (DeleteFixationLineResponse);
 }
 
 // ==============================
@@ -497,9 +498,13 @@ message FixationLine {
   google.protobuf.Timestamp updated_at = 10;
 }
 
-message GetDeleteFixationLineRequest {
+message DeleteFixationLineRequest {
   string radar_id = 1;
   string lane_id = 2;
+}
+
+message DeleteFixationLineForIdRequest {
+  string id = 1;
 }
 
 message GetFixationLineRequest {

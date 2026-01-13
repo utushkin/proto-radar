@@ -61,6 +61,7 @@ const (
 	RadarService_GetFixationLinesForLane_FullMethodName       = "/radar.RadarService/GetFixationLinesForLane"
 	RadarService_GetFixationLinesForRadar_FullMethodName      = "/radar.RadarService/GetFixationLinesForRadar"
 	RadarService_DeleteFixationLine_FullMethodName            = "/radar.RadarService/DeleteFixationLine"
+	RadarService_DeleteFixationLineForId_FullMethodName       = "/radar.RadarService/DeleteFixationLineForId"
 )
 
 // RadarServiceClient is the client API for RadarService service.
@@ -116,7 +117,8 @@ type RadarServiceClient interface {
 	UpdateFixationLine(ctx context.Context, in *UpdateFixationLineRequest, opts ...grpc.CallOption) (*FixationLineResponse, error)
 	GetFixationLinesForLane(ctx context.Context, in *GetFixationLineRequest, opts ...grpc.CallOption) (*FixationLinesForLaneResponse, error)
 	GetFixationLinesForRadar(ctx context.Context, in *GetAllFixationLinesRequest, opts ...grpc.CallOption) (*FixationLinesResponse, error)
-	DeleteFixationLine(ctx context.Context, in *GetDeleteFixationLineRequest, opts ...grpc.CallOption) (*DeleteFixationLineResponse, error)
+	DeleteFixationLine(ctx context.Context, in *DeleteFixationLineRequest, opts ...grpc.CallOption) (*DeleteFixationLineResponse, error)
+	DeleteFixationLineForId(ctx context.Context, in *DeleteFixationLineForIdRequest, opts ...grpc.CallOption) (*DeleteFixationLineResponse, error)
 }
 
 type radarServiceClient struct {
@@ -527,10 +529,20 @@ func (c *radarServiceClient) GetFixationLinesForRadar(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *radarServiceClient) DeleteFixationLine(ctx context.Context, in *GetDeleteFixationLineRequest, opts ...grpc.CallOption) (*DeleteFixationLineResponse, error) {
+func (c *radarServiceClient) DeleteFixationLine(ctx context.Context, in *DeleteFixationLineRequest, opts ...grpc.CallOption) (*DeleteFixationLineResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteFixationLineResponse)
 	err := c.cc.Invoke(ctx, RadarService_DeleteFixationLine_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) DeleteFixationLineForId(ctx context.Context, in *DeleteFixationLineForIdRequest, opts ...grpc.CallOption) (*DeleteFixationLineResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteFixationLineResponse)
+	err := c.cc.Invoke(ctx, RadarService_DeleteFixationLineForId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -590,7 +602,8 @@ type RadarServiceServer interface {
 	UpdateFixationLine(context.Context, *UpdateFixationLineRequest) (*FixationLineResponse, error)
 	GetFixationLinesForLane(context.Context, *GetFixationLineRequest) (*FixationLinesForLaneResponse, error)
 	GetFixationLinesForRadar(context.Context, *GetAllFixationLinesRequest) (*FixationLinesResponse, error)
-	DeleteFixationLine(context.Context, *GetDeleteFixationLineRequest) (*DeleteFixationLineResponse, error)
+	DeleteFixationLine(context.Context, *DeleteFixationLineRequest) (*DeleteFixationLineResponse, error)
+	DeleteFixationLineForId(context.Context, *DeleteFixationLineForIdRequest) (*DeleteFixationLineResponse, error)
 	mustEmbedUnimplementedRadarServiceServer()
 }
 
@@ -721,8 +734,11 @@ func (UnimplementedRadarServiceServer) GetFixationLinesForLane(context.Context, 
 func (UnimplementedRadarServiceServer) GetFixationLinesForRadar(context.Context, *GetAllFixationLinesRequest) (*FixationLinesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFixationLinesForRadar not implemented")
 }
-func (UnimplementedRadarServiceServer) DeleteFixationLine(context.Context, *GetDeleteFixationLineRequest) (*DeleteFixationLineResponse, error) {
+func (UnimplementedRadarServiceServer) DeleteFixationLine(context.Context, *DeleteFixationLineRequest) (*DeleteFixationLineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFixationLine not implemented")
+}
+func (UnimplementedRadarServiceServer) DeleteFixationLineForId(context.Context, *DeleteFixationLineForIdRequest) (*DeleteFixationLineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFixationLineForId not implemented")
 }
 func (UnimplementedRadarServiceServer) mustEmbedUnimplementedRadarServiceServer() {}
 func (UnimplementedRadarServiceServer) testEmbeddedByValue()                      {}
@@ -1466,7 +1482,7 @@ func _RadarService_GetFixationLinesForRadar_Handler(srv interface{}, ctx context
 }
 
 func _RadarService_DeleteFixationLine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDeleteFixationLineRequest)
+	in := new(DeleteFixationLineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1478,7 +1494,25 @@ func _RadarService_DeleteFixationLine_Handler(srv interface{}, ctx context.Conte
 		FullMethod: RadarService_DeleteFixationLine_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RadarServiceServer).DeleteFixationLine(ctx, req.(*GetDeleteFixationLineRequest))
+		return srv.(RadarServiceServer).DeleteFixationLine(ctx, req.(*DeleteFixationLineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RadarService_DeleteFixationLineForId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFixationLineForIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).DeleteFixationLineForId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_DeleteFixationLineForId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).DeleteFixationLineForId(ctx, req.(*DeleteFixationLineForIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1653,6 +1687,10 @@ var RadarService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteFixationLine",
 			Handler:    _RadarService_DeleteFixationLine_Handler,
+		},
+		{
+			MethodName: "DeleteFixationLineForId",
+			Handler:    _RadarService_DeleteFixationLineForId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
