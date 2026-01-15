@@ -231,7 +231,9 @@ message TransportObjectInfo {
   double length = 8;
   int64 date = 9;
   google.protobuf.Timestamp created_at = 10;
-  int64 number_lane = 11;
+//  int64 number_lane = 11;
+  string radar_id = 11;
+  string lane_id = 12;
 }
 
 message GetTransportObjectInfoResponse {
