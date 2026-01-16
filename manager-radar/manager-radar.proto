@@ -24,6 +24,8 @@ service RadarService {
   rpc GetAllRadarsWithLanes(google.protobuf.Empty) returns (RadarsWithLanesResponse);
   rpc DeleteRadarWithLanesForSerial(SerialRequest) returns (SerialResponse);
   rpc DeleteRadarWithLanesForId(IdRequest) returns (SerialResponse);
+  rpc GetRadarLanes(GetRadarLanesRequest) returns (GetRadarLanesResponse);
+  rpc SetRadarLanes(SetRadarLanesRequest) returns (SetRadarLanesResponse);
 
   // Методы для справочников
   rpc GetTimeZones(google.protobuf.Empty) returns (TimeZonesResponse);
@@ -551,4 +553,23 @@ message UpdateFixationLineRequest {
   double p1_y = 4;
   double p2_x = 5;
   double p2_y = 6;
+}
+
+message GetRadarLanesRequest {
+  string id = 1;
+}
+
+message SetRadarLanesRequest {
+  string id = 1;
+  repeated SensorLane lanes = 2;
+}
+
+message GetRadarLanesResponse {
+  string id = 1;
+  repeated SensorLane lanes = 2;
+}
+
+message SetRadarLanesResponse {
+  string id = 1;
+  repeated SensorLane lanes = 2;
 }

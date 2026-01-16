@@ -33,6 +33,8 @@ const (
 	RadarService_GetAllRadarsWithLanes_FullMethodName         = "/radar.RadarService/GetAllRadarsWithLanes"
 	RadarService_DeleteRadarWithLanesForSerial_FullMethodName = "/radar.RadarService/DeleteRadarWithLanesForSerial"
 	RadarService_DeleteRadarWithLanesForId_FullMethodName     = "/radar.RadarService/DeleteRadarWithLanesForId"
+	RadarService_GetRadarLanes_FullMethodName                 = "/radar.RadarService/GetRadarLanes"
+	RadarService_SetRadarLanes_FullMethodName                 = "/radar.RadarService/SetRadarLanes"
 	RadarService_GetTimeZones_FullMethodName                  = "/radar.RadarService/GetTimeZones"
 	RadarService_GetRadarModels_FullMethodName                = "/radar.RadarService/GetRadarModels"
 	RadarService_GetDirectionTypes_FullMethodName             = "/radar.RadarService/GetDirectionTypes"
@@ -83,6 +85,8 @@ type RadarServiceClient interface {
 	GetAllRadarsWithLanes(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RadarsWithLanesResponse, error)
 	DeleteRadarWithLanesForSerial(ctx context.Context, in *SerialRequest, opts ...grpc.CallOption) (*SerialResponse, error)
 	DeleteRadarWithLanesForId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*SerialResponse, error)
+	GetRadarLanes(ctx context.Context, in *GetRadarLanesRequest, opts ...grpc.CallOption) (*GetRadarLanesResponse, error)
+	SetRadarLanes(ctx context.Context, in *SetRadarLanesRequest, opts ...grpc.CallOption) (*SetRadarLanesResponse, error)
 	// Методы для справочников
 	GetTimeZones(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*TimeZonesResponse, error)
 	GetRadarModels(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*RadarModelsResponse, error)
@@ -253,6 +257,26 @@ func (c *radarServiceClient) DeleteRadarWithLanesForId(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SerialResponse)
 	err := c.cc.Invoke(ctx, RadarService_DeleteRadarWithLanesForId_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) GetRadarLanes(ctx context.Context, in *GetRadarLanesRequest, opts ...grpc.CallOption) (*GetRadarLanesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRadarLanesResponse)
+	err := c.cc.Invoke(ctx, RadarService_GetRadarLanes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *radarServiceClient) SetRadarLanes(ctx context.Context, in *SetRadarLanesRequest, opts ...grpc.CallOption) (*SetRadarLanesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetRadarLanesResponse)
+	err := c.cc.Invoke(ctx, RadarService_SetRadarLanes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -568,6 +592,8 @@ type RadarServiceServer interface {
 	GetAllRadarsWithLanes(context.Context, *empty.Empty) (*RadarsWithLanesResponse, error)
 	DeleteRadarWithLanesForSerial(context.Context, *SerialRequest) (*SerialResponse, error)
 	DeleteRadarWithLanesForId(context.Context, *IdRequest) (*SerialResponse, error)
+	GetRadarLanes(context.Context, *GetRadarLanesRequest) (*GetRadarLanesResponse, error)
+	SetRadarLanes(context.Context, *SetRadarLanesRequest) (*SetRadarLanesResponse, error)
 	// Методы для справочников
 	GetTimeZones(context.Context, *empty.Empty) (*TimeZonesResponse, error)
 	GetRadarModels(context.Context, *empty.Empty) (*RadarModelsResponse, error)
@@ -652,6 +678,12 @@ func (UnimplementedRadarServiceServer) DeleteRadarWithLanesForSerial(context.Con
 }
 func (UnimplementedRadarServiceServer) DeleteRadarWithLanesForId(context.Context, *IdRequest) (*SerialResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRadarWithLanesForId not implemented")
+}
+func (UnimplementedRadarServiceServer) GetRadarLanes(context.Context, *GetRadarLanesRequest) (*GetRadarLanesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRadarLanes not implemented")
+}
+func (UnimplementedRadarServiceServer) SetRadarLanes(context.Context, *SetRadarLanesRequest) (*SetRadarLanesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetRadarLanes not implemented")
 }
 func (UnimplementedRadarServiceServer) GetTimeZones(context.Context, *empty.Empty) (*TimeZonesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTimeZones not implemented")
@@ -991,6 +1023,42 @@ func _RadarService_DeleteRadarWithLanesForId_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RadarServiceServer).DeleteRadarWithLanesForId(ctx, req.(*IdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RadarService_GetRadarLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRadarLanesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).GetRadarLanes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_GetRadarLanes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).GetRadarLanes(ctx, req.(*GetRadarLanesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RadarService_SetRadarLanes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetRadarLanesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RadarServiceServer).SetRadarLanes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RadarService_SetRadarLanes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RadarServiceServer).SetRadarLanes(ctx, req.(*SetRadarLanesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1575,6 +1643,14 @@ var RadarService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRadarWithLanesForId",
 			Handler:    _RadarService_DeleteRadarWithLanesForId_Handler,
+		},
+		{
+			MethodName: "GetRadarLanes",
+			Handler:    _RadarService_GetRadarLanes_Handler,
+		},
+		{
+			MethodName: "SetRadarLanes",
+			Handler:    _RadarService_SetRadarLanes_Handler,
 		},
 		{
 			MethodName: "GetTimeZones",
