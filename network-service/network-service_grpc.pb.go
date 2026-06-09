@@ -23,6 +23,9 @@ const (
 	NetworkService_GetCurrentNetworkConfig_FullMethodName = "/networkService.NetworkService/GetCurrentNetworkConfig"
 	NetworkService_SetTimeSyncMode_FullMethodName         = "/networkService.NetworkService/SetTimeSyncMode"
 	NetworkService_GetCurrentTime_FullMethodName          = "/networkService.NetworkService/GetCurrentTime"
+	NetworkService_RestartServices_FullMethodName         = "/networkService.NetworkService/RestartServices"
+	NetworkService_RestartDevice_FullMethodName           = "/networkService.NetworkService/RestartDevice"
+	NetworkService_DeepRestartDevice_FullMethodName       = "/networkService.NetworkService/DeepRestartDevice"
 )
 
 // NetworkServiceClient is the client API for NetworkService service.
@@ -35,6 +38,10 @@ type NetworkServiceClient interface {
 	// Управление временем
 	SetTimeSyncMode(ctx context.Context, in *TimeSyncRequest, opts ...grpc.CallOption) (*Response, error)
 	GetCurrentTime(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TimeResponse, error)
+	// Управление перезапуском
+	RestartServices(ctx context.Context, in *RestartRequest, opts ...grpc.CallOption) (*RestartResponse, error)
+	RestartDevice(ctx context.Context, in *RestartRequest, opts ...grpc.CallOption) (*RestartResponse, error)
+	DeepRestartDevice(ctx context.Context, in *DeepRestartRequest, opts ...grpc.CallOption) (*RestartResponse, error)
 }
 
 type networkServiceClient struct {
@@ -85,6 +92,36 @@ func (c *networkServiceClient) GetCurrentTime(ctx context.Context, in *Empty, op
 	return out, nil
 }
 
+func (c *networkServiceClient) RestartServices(ctx context.Context, in *RestartRequest, opts ...grpc.CallOption) (*RestartResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RestartResponse)
+	err := c.cc.Invoke(ctx, NetworkService_RestartServices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *networkServiceClient) RestartDevice(ctx context.Context, in *RestartRequest, opts ...grpc.CallOption) (*RestartResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RestartResponse)
+	err := c.cc.Invoke(ctx, NetworkService_RestartDevice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *networkServiceClient) DeepRestartDevice(ctx context.Context, in *DeepRestartRequest, opts ...grpc.CallOption) (*RestartResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RestartResponse)
+	err := c.cc.Invoke(ctx, NetworkService_DeepRestartDevice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NetworkServiceServer is the server API for NetworkService service.
 // All implementations must embed UnimplementedNetworkServiceServer
 // for forward compatibility.
@@ -95,6 +132,10 @@ type NetworkServiceServer interface {
 	// Управление временем
 	SetTimeSyncMode(context.Context, *TimeSyncRequest) (*Response, error)
 	GetCurrentTime(context.Context, *Empty) (*TimeResponse, error)
+	// Управление перезапуском
+	RestartServices(context.Context, *RestartRequest) (*RestartResponse, error)
+	RestartDevice(context.Context, *RestartRequest) (*RestartResponse, error)
+	DeepRestartDevice(context.Context, *DeepRestartRequest) (*RestartResponse, error)
 	mustEmbedUnimplementedNetworkServiceServer()
 }
 
@@ -116,6 +157,15 @@ func (UnimplementedNetworkServiceServer) SetTimeSyncMode(context.Context, *TimeS
 }
 func (UnimplementedNetworkServiceServer) GetCurrentTime(context.Context, *Empty) (*TimeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCurrentTime not implemented")
+}
+func (UnimplementedNetworkServiceServer) RestartServices(context.Context, *RestartRequest) (*RestartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestartServices not implemented")
+}
+func (UnimplementedNetworkServiceServer) RestartDevice(context.Context, *RestartRequest) (*RestartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestartDevice not implemented")
+}
+func (UnimplementedNetworkServiceServer) DeepRestartDevice(context.Context, *DeepRestartRequest) (*RestartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeepRestartDevice not implemented")
 }
 func (UnimplementedNetworkServiceServer) mustEmbedUnimplementedNetworkServiceServer() {}
 func (UnimplementedNetworkServiceServer) testEmbeddedByValue()                        {}
@@ -210,6 +260,60 @@ func _NetworkService_GetCurrentTime_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NetworkService_RestartServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RestartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetworkServiceServer).RestartServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NetworkService_RestartServices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetworkServiceServer).RestartServices(ctx, req.(*RestartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NetworkService_RestartDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RestartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetworkServiceServer).RestartDevice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NetworkService_RestartDevice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetworkServiceServer).RestartDevice(ctx, req.(*RestartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NetworkService_DeepRestartDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeepRestartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetworkServiceServer).DeepRestartDevice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NetworkService_DeepRestartDevice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetworkServiceServer).DeepRestartDevice(ctx, req.(*DeepRestartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NetworkService_ServiceDesc is the grpc.ServiceDesc for NetworkService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -232,6 +336,18 @@ var NetworkService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCurrentTime",
 			Handler:    _NetworkService_GetCurrentTime_Handler,
+		},
+		{
+			MethodName: "RestartServices",
+			Handler:    _NetworkService_RestartServices_Handler,
+		},
+		{
+			MethodName: "RestartDevice",
+			Handler:    _NetworkService_RestartDevice_Handler,
+		},
+		{
+			MethodName: "DeepRestartDevice",
+			Handler:    _NetworkService_DeepRestartDevice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
